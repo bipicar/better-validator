@@ -1,0 +1,11 @@
+/mongod
+/.c9revisions
+/.idea
+*.suo
+/data
+/node_modules
+/coverage
+/_*
+/certs
+*.log
+.npmrc
