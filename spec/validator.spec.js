@@ -110,4 +110,38 @@ describe('basic usage', () => {
     expect(errors).toBeDefined();
     expect(errors.length).toBe(0);
   });
+
+  it('isEqual', () => {
+    const validator = new Validator(OPTIONS_RAW);
+    const rule = (item) => {
+      item.isEqual(17);
+    };
+
+    expect(validator(17, rule)).toEqual([]);
+    expect(validator(16, rule)).toContain(jasmine.objectContaining({path: [], test: 'isEqual'}));
+    expect(validator(17.0000001, rule)).toContain(jasmine.objectContaining({path: [], test: 'isEqual'}));
+    expect(validator('17', rule)).toContain(jasmine.objectContaining({path: [], test: 'isEqual'}));
+    expect(validator('asdf', rule)).toContain(jasmine.objectContaining({path: [], test: 'isEqual'}));
+    expect(validator(new Date(), rule)).toContain(jasmine.objectContaining({path: [], test: 'isEqual'}));
+    expect(validator(/./, rule)).toContain(jasmine.objectContaining({path: [], test: 'isEqual'}));
+    expect(validator(true, rule)).toContain(jasmine.objectContaining({path: [], test: 'isEqual'}));
+    expect(validator(false, rule)).toContain(jasmine.objectContaining({path: [], test: 'isEqual'}));
+  });
+
+  it('notEqual', () => {
+    const validator = new Validator(OPTIONS_RAW);
+    const rule = (item) => {
+      item.notEqual(17);
+    };
+
+    expect(validator(17, rule)).toContain(jasmine.objectContaining({path: [], test: 'notEqual'}));
+    expect(validator(16, rule)).toEqual([]);
+    expect(validator(17.0000001, rule)).toEqual([]);
+    expect(validator('17', rule)).toEqual([]);
+    expect(validator('asdf', rule)).toEqual([]);
+    expect(validator(new Date(), rule)).toEqual([]);
+    expect(validator(/./, rule)).toEqual([]);
+    expect(validator(true, rule)).toEqual([]);
+    expect(validator(false, rule)).toEqual([]);
+  });
 });

@@ -15,6 +15,8 @@ module.exports = class IsObject extends Base {
   }
 
   childValidator(property) {
+    if (!property) return this;
+
     const path = this.path.slice();
     path.push(property);
     this.properties.push(property);

@@ -1,0 +1,207 @@
+const request = require('supertest');
+const express = require('express');
+const bodyParser = require('body-parser')
+
+const Validator = require('../src/validator');
+
+describe('readme.md', () => {
+  describe('Basic usage', () => {
+    it('1', () => {
+      const validator = new Validator();
+
+      validator(123).isNumber();
+      const errors = validator.run(); // => []
+      expect(errors).toEqual([]);
+    });
+
+    it('2', () => {
+      const validator = new Validator();
+
+      validator('not number').isNumber();
+      const errors = validator.run(); // => [{path: [], value: 'not number', test: 'isNumber'}]
+      expect(errors.length).toBe(1);
+      expect(errors).toContain(jasmine.objectContaining({path: [], value: 'not number', test: 'isNumber'}));
+    });
+
+    it('Validate multiple objects at once', () => {
+      const validator = new Validator();
+
+      const query = {};
+      const body = null;
+
+      validator(query).display('query').required();
+      validator(body).display('body').required();
+      const errors = validator.run(); // => [{path: ['body'], value: null, test: 'required'}]
+      expect(errors.length).toBe(1);
+      expect(errors).toContain(jasmine.objectContaining({path: ['body'], value: null, test: 'required'}));
+    });
+
+    it('Validate children of an object', () => {
+      const validator = new Validator();
+
+      const query = {count: 5, hint: 32};
+
+      validator(query).required().isObject((child) => {
+        child('count').required().isNumber().integer(); // pass
+        child('hint').isString(); // fail
+      });
+      const errors = validator.run(); // => [{path: ['hint'], value: 32, test: 'isString'}]
+      expect(errors.length).toBe(1);
+      expect(errors).toContain(jasmine.objectContaining({path: ['hint'], value: 32, test: 'isString'}));
+    });
+
+    xit('Validate children of an array', () => {
+      // TODO
+      const validator = new Validator();
+
+      const array = [{count: 5, hint: 32}];
+
+      validator(array).required().isArrayOf((child) => {
+        child('count').required().isNumber().integer(); // pass
+        child('hint').isString(); // fail
+      });
+      const errors = validator.run(); // => [{path: [0, 'hint'], value: 32, test: 'isString'}]
+      expect(errors.length).toBe(1);
+      expect(errors).toContain(jasmine.objectContaining({path: [0, 'hint'], value: 32, test: 'isString'}));
+    });
+
+    it('Re-usable validation parts 1', () => {
+      const validator = new Validator();
+
+      const rule = (item) => {
+        item.isNumber().integer().isPositive();
+      };
+
+      const errors = validator(123, rule); // => []
+      expect(errors).toEqual([]);
+    });
+
+    it('Re-usable validation parts 2', () => {
+      const validator = new Validator();
+
+      const query = {count: 5, hint: '32'};
+
+      const rule = (item) => item.isNumber().integer().isPositive();
+
+      validator(query).required().isObject((child) => {
+        child('count').check(rule).lte(10); // pass
+        child('hint').check(rule); // fail
+      });
+      const errors = validator.run(); // => [{path: ['hint'], value: '32', test: 'isNumber'}]
+      expect(errors.length).toBe(1);
+      expect(errors).toContain(jasmine.objectContaining({path: ['hint'], value: '32', test: 'isNumber'}));
+    });
+
+    xit('___', () => {
+
+      expect(errors.length).toBe(1);
+      expect(errors).toContain(jasmine.objectContaining({path: ['body'], value: null, test: 'required'}));
+    });
+
+  });
+
+  describe('express.js', () => {
+    describe('query check', () => {
+      const queryRule = (query) => {
+        query('email').required().isEmail();
+        query('date').required().isISO8601();
+      };
+      const check = Validator.expressMiddleware();
+      const app = express();
+      app.get('/test', check.query(queryRule), (req, res) => {
+        res.status(200).send();
+      });
+
+      it('will return 200 if valid', (done) => {
+        request(app)
+          .get('/test?email=me@home.com&date=2016-10-26T12:43:00Z')
+          .expect(200)
+          .end((err) => {
+            if (err) fail(err);
+            done();
+          })
+      });
+
+      it('will return 400 if not valid 1', (done) => {
+        request(app)
+          .get('/test?date=2016-10-26T12:43:00Z')
+          .expect(400, [{path: ['?', 'email'], test: 'required'}])
+          .end((err) => {
+            if (err) fail(err);
+            done();
+          });
+      });
+
+      it('will return 400 if not valid 2', (done) => {
+        request(app)
+          .get('/test?email=test&date=2016-10-26T12:43:00Z')
+          .expect(400, [{path: ['?', 'email'], value: 'test', test: 'isEmail'}])
+          .end((err) => {
+            if (err) fail(err);
+            done();
+          });
+      });
+    });
+
+    describe('body check', () => {
+      const bodyRule = (body) => {
+        body('count').required().isNumber().integer();
+        body('hint').required().isString();
+        body().strict();
+      };
+      const check = Validator.expressMiddleware();
+      const app = express();
+      app.use(bodyParser.json());
+      app.post('/test', check.body(bodyRule), (req, res) => {
+        res.status(200).send();
+      });
+
+      it('will return 200 if valid', (done) => {
+        request(app)
+          .post('/test')
+          .send({count: 5, hint: 'test'})
+          .expect(200)
+          .end((err) => {
+            if (err) fail(err);
+            done();
+          });
+      });
+
+      it('will evaluate strict', (done) => {
+        request(app)
+          .post('/test')
+          .send({count: 5, hint: 'test', foo: 'bar'})
+          .expect(400, [{path: ['foo'], value: 'bar', test: 'strict'}])
+          .end((err) => {
+            if (err) fail(err);
+            done();
+          });
+      });
+
+      it('will return 400 if not valid 1', (done) => {
+        request(app)
+          .post('/test')
+          .send({hint: 'test'})
+          .expect(400, [{path: ['count'], test: 'required'}])
+          .end((err) => {
+            if (err) fail(err);
+            done();
+          });
+      });
+
+      it('will return 400 if not valid 2', (done) => {
+        request(app)
+          .post('/test')
+          .send({count: 5, hint: 123})
+          .expect(400, [{path: ['hint'], value: 123, test: 'isString'}])
+          .end((err) => {
+            if (err) fail(err);
+            done();
+          });
+      });
+
+    });
+
+  });
+
+});

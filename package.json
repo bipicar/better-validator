@@ -2,17 +2,41 @@
   "name": "better-validator",
   "version": "1.0.0",
   "description": "",
+  "homepage": "https://bitbucket.org/gregbacchus/better-validator/overview",
+  "keywords": [
+    "validate",
+    "validator",
+    "validation",
+    "express",
+    "expressjs",
+    "express.js",
+    "check",
+    "test",
+    "request-validation",
+    "request-validator",
+    "koa",
+    "koajs",
+    "koa.js"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://bitbucket.org/gregbacchus/better-validator.git"
+  },
   "scripts": {
     "test": "jasmine"
   },
   "author": "Greg Bacchus",
-  "devDependencies": {
-    "eslint": "^3.7.1",
-    "istanbul": "^0.4.5",
-    "jasmine": "^2.5.2"
-  },
   "dependencies": {
     "underscore": "^1.8.3",
     "validator": "^6.0.0"
+  },
+  "devDependencies": {
+    "body-parser": "^1.15.2",
+    "eslint": "^3.7.1",
+    "express": "^4.14.0",
+    "istanbul": "^0.4.5",
+    "jasmine": "^2.5.2",
+    "koa": "^1.2.4",
+    "supertest": "^2.0.1"
   }
 }
