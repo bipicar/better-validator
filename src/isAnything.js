@@ -4,7 +4,6 @@ const Base = require('./base');
 const IsNumber = require('./isNumber');
 const IsString = require('./isString');
 const IsObject = require('./isObject');
-const IsObjectOfString = require('./isObjectOfString');
 const IsArrayOf = require('./isArrayOf');
 
 module.exports = class IsAnything extends Base {

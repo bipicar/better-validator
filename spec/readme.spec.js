@@ -3,6 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser')
 
 const Validator = require('../src/validator');
+const runTests = require('./runTests');
 
 describe('readme.md', () => {
   describe('Basic usage', () => {
@@ -41,9 +42,9 @@ describe('readme.md', () => {
 
       const query = {count: 5, hint: 32};
 
-      validator(query).required().isObject((child) => {
-        child('count').required().isNumber().integer(); // pass
-        child('hint').isString(); // fail
+      validator(query).required().isObject((obj) => {
+        obj('count').required().isNumber().integer(); // pass
+        obj('hint').isString(); // fail
       });
       const errors = validator.run(); // => [{path: ['hint'], value: 32, test: 'isString'}]
       expect(errors.length).toBe(1);
@@ -204,4 +205,86 @@ describe('readme.md', () => {
 
   });
 
+  // TODO koa
+
+  describe('required()', () => {
+    it('will allow require by itself', () => {
+      const rule = (item) => {
+        item.required();
+      };
+
+      runTests(rule, [
+        {value: null, fail: 'required'},
+        {value: undefined, fail: 'required'},
+        {value: 0},
+        {value: -1},
+        {value: 1},
+        {value: -1.32948},
+        {value: 1.23488},
+        {value: ''},
+        {value: 'asdf'},
+        {value: '1234'},
+        {value: new Date()},
+        {value: /./},
+        {value: true},
+        {value: false},
+        {value: {}},
+        {value: []},
+        {value: NaN}
+      ]);
+    });
+
+    it('will allow require before type constraint', () => {
+      const rule = (item) => {
+        item.required().isString();
+      };
+
+      runTests(rule, [
+        {value: null, fail: 'required'},
+        {value: undefined, fail: 'required'},
+        {value: 0, fail: 'isString'},
+        {value: -1, fail: 'isString'},
+        {value: 1, fail: 'isString'},
+        {value: -1.32948, fail: 'isString'},
+        {value: 1.23488, fail: 'isString'},
+        {value: ''},
+        {value: 'asdf'},
+        {value: '1234'},
+        {value: new Date(), fail: 'isString'},
+        {value: /./, fail: 'isString'},
+        {value: true, fail: 'isString'},
+        {value: false, fail: 'isString'},
+        {value: {}, fail: 'isString'},
+        {value: [], fail: 'isString'},
+        {value: NaN, fail: 'isString'}
+      ]);
+    });
+
+    it('will allow require after type constraint', () => {
+      const rule = (item) => {
+        item.isString().required();
+      };
+
+      runTests(rule, [
+        {value: null, fail: 'required'},
+        {value: undefined, fail: 'required'},
+        {value: 0, fail: 'isString'},
+        {value: -1, fail: 'isString'},
+        {value: 1, fail: 'isString'},
+        {value: -1.32948, fail: 'isString'},
+        {value: 1.23488, fail: 'isString'},
+        {value: ''},
+        {value: 'asdf'},
+        {value: '1234'},
+        {value: new Date(), fail: 'isString'},
+        {value: /./, fail: 'isString'},
+        {value: true, fail: 'isString'},
+        {value: false, fail: 'isString'},
+        {value: {}, fail: 'isString'},
+        {value: [], fail: 'isString'},
+        {value: NaN, fail: 'isString'}
+      ]);
+    });
+
+  });
 });

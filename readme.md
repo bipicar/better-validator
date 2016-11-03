@@ -53,9 +53,9 @@ const validator = new Validator();
 
 const query = {count: 5, hint: 32};
 
-validator(query).required().isObject((child) => {
-  child('count').required().isNumber().integer(); // pass
-  child('hint').isString(); // fail
+validator(query).required().isObject((obj) => {
+  obj('count').required().isNumber().integer(); // pass
+  obj('hint').isString(); // fail
 });
 const errors = validator.run(); // => [{path: ['hint'], value: 32, test: 'isString'}]
 ```
@@ -119,7 +119,7 @@ app.post('/', [check.query(queryRule), check.body(bodyRule), function(req, res) 
 ```
 
 
-TODO: BELOW HERE
+TODO
 
 Using with koa.js
 
@@ -161,135 +161,162 @@ If the body content does not pass the given validation check, the validator will
 
 Following are the build-in validators. You may also use your own, see section below.
 
-### isObject
+### required
 
-Used to validate that the item under test is an object, and to check it's properties. This is often the root validator.
-
-Property requirements are chained to the `isObject` validator.
+The various *type* validators will accept the specified type or `null` or `undefined`. To modify the check to not accept
+`null` or `undefined`, add the `required()` constraint.
 
 ```javascript
-var check = validator.isObject()
-  .withRequired('requiredProperty', propertyValidator1)
-  .withOptional('optionalProperty', propertyValidator2);
+validator(value).required();
 ```
 
-If any properties are present in the object under test that are not listed, this will fail the validation.
+```javascript
+validator(value).isString().required();
+```
 
-The property validators may be any other validator, including `isObject`, or may omitted to allow any value.
+```javascript
+validator(value).required().isString();
+```
 
-### isAnyObject
+### All Types
 
-Similar to `isObject`, however does not fail for unexpected properties.
+```javascript
+validator(value).isEqual(7);
+```
+
+```javascript
+validator(value).notEqual('test');
+```
+
+### isObject
+
+Used to validate that the value under test is an object, and to check it's properties.
+
+```javascript
+validator(value).isObject((obj) => {
+  obj('count').required().isNumber().integer();
+  obj('hint').isString();
+});
+```
+
+To ensure that the object has **only** the expected properties, the `strict()` constraint is added.
+
+```javascript
+validator(value).isObject((obj) => {
+  obj('count').required().isNumber().integer();
+  obj('hint').isString();
+}).strict();
+```
 
 ### isString
 
-Makes sure the item is of type string, also can check the value against a regular expression.
+Makes sure the value is of type string.
 
 ```javascript
-var check = validator.isString();
-```
-or
-```javascript
-var check = validator.isString({regex: /[0-9A-Fa-f]+/, message: 'Invalid value. Value must be hex.'});
+validator(value).isString();
 ```
 
-### isStringOrNull
-
-Makes sure the item is of type string or equal to null, also can check the value against a regular expression.
-
 ```javascript
-var check = validator.isStringOrNull();
+validator(value).isString().isEmail();
 ```
-or
+
+#### isString Checks
+
+Checks from the library [validator](https://www.npmjs.com/package/validator) are included. Please see the link for more details.
+All checks that start with `is` are mounted into the `isString()` module along with their inverse `not`
+
+* `isAfter(date)`, `notAfter(date)`
+* `isAlpha(locale)`, `notAlpha(locale)`
+* `isAlphanumeric(locale)`, `notAlphanumeric(locale)`
+* `isAscii()`, `notAscii()`
+* `isBase64()`, `notBase64()`
+* `isBefore(date)`, `notBefore(date)`
+* `isBoolean()`, `notBoolean()`
+* `isByteLength(options)`, `notByteLength(options)`
+* `isCreditCard()`, `notCreditCard()`
+* `isCurrency(options)`, `notCurrency(options)`
+* `isDataURI()`, `notDataURI()`
+* `isDate()`, `notDate()`
+* `isDecimal()`, `notDecimal()`
+* `isDivisibleBy(number)`, `notDivisibleBy(number)`
+* `isEmail(options)`, `notEmail(options)`
+* `isEmpty()`, `notEmpty()`
+* `isFQDN(options)`, `notFQDN(options)`
+* `isFloat(options)`, `notFloat(options)`
+* `isFullWidth()`, `notFullWidth()`
+* `isHalfWidth()`, `notHalfWidth()`
+* `isHexColor()`, `notHexColor()`
+* `isHexadecimal()`, `notHexadecimal()`
+* `isIP(version)`, `notIP(version)`
+* `isISBN(version)`, `notISBN(version)`
+* `isISSN(options)`, `notISSN(options)`
+* `isISIN()`, `notISIN()`
+* `isISO8601()`, `notISO8601()`
+* `isIn(values)`, `notIn(values)`
+* `isInt(options)`, `notInt(options)`
+* `isJSON()`, `notJSON()`
+* `isLength(options)`, `notLength(options)`
+* `isLowercase()`, `notLowercase()`
+* `isMACAddress()`, `notMACAddress()`
+* `isMD5()`, `notMD5()`
+* `isMobilePhone(locale)`, `notMobilePhone(locale)`
+* `isMongoId()`, `notMongoId()`
+* `isMultibyte()`, `notMultibyte()`
+* `isNumeric()`, `notNumeric()`
+* `isSurrogatePair()`, `notSurrogatePair()`
+* `isURL(options)`, `notURL(options)`
+* `isUUID(version)`, `notUUID(version)`
+* `isUppercase()`, `notUppercase()`
+* `isVariableWidth()`, `notVariableWidth()`
+* `isWhitelisted(chars)`, `notWhitelisted(chars)`
+
+Also regular expression checks can be performed with `isMatch(regex)` and `notMatch(regex)`
+
+Like all other constraints, these amy be chained together:
+
 ```javascript
-var check = validator.isArray(validator.isStringOrNull({regex: /[0-9A-Fa-f]+/, message: 'Invalid value. Value must be hex.'}));
+validator(value).isAlphanumeric().isLowercase();
 ```
 
 ### isNumber
 
-Makes sure the item is a number, also can specify minimum and maximum values.
+Makes sure the value is a number.
 
 ```javascript
-var check = validator.isNumber();
+validator(value).isNumber();
 ```
-or
-```javascript
-var check = validator.isNumber({min: 0, max: 78});
-```
-
-### isInteger
-
-Makes sure the item is a whole number (integer), also can specify minimum and maximum values.
 
 ```javascript
-var check = validator.isInteger();
-```
-or
-```javascript
-var check = validator.isInteger({min: 0, max: 78});
+validator(value).isNumber().integer();
 ```
 
-### isDate
+#### isNumber Checks
 
-Checks for a `Date` object or a string that is moment.js can parse.
+* `integer()`
+* `isInRange(lower, upper)`, `notInRange(lower, upper)`
+* `gt(threshold)`
+* `gte(threshold)`
+* `lt(threshold)`
+* `lte(threshold)`
+* `isPositive()`, `notPositive()`
+* `isNegative()`, `notNegative()`
+* `isZero()`, `notZero()`
 
-```javascript
-var check = validator.isDate();
-```
-
-Optionally, the moment.js format can be passed through to specify a particular format
-
-```javascript
-var check = validator.isDate();
-```
-or
-```javascript
-var check = validator.isDate({format: 'LT'});
-```
-
-### isIsoDate
-
-A shortcut for `validator.isDate({format: 'YYYY-MM-DD'})`
-
-### isArray
+### isArrayOf
 
 Makes sure that the item is of type array, and validates the items. Also can specify minimum and maximum length of the array.
-
+TODO
 ```javascript
-var check = validator.isArray(validator.isDate());
-```
-or
-```javascript
-var check = validator.isArray(validator.isDate(), {min: 3});
+validator(value).isArrayOf((item) => {
+});
 ```
 
 ## Your Own Validators
+TODO
 
-You may use your own validators. All that is required is a function that meets the below requirements.
+## Formatting Result / Errors
 
-```javascript
-function myValidator(value, onError) {
-  ...
-}
-```
-
-Where `value` is the item under test, and `onError` is a function to call with any validation errors. It has the signature:
-
-```javascript
-function onError(message,propertyName,propertyValue) {
-  ...
-}
-```
-
-Example: to make sure that there can not be both properties `foo` and `bar`
-
-```javascript
-function validateFooXorBar(value, onError) {
-  if (value.foo !== undefined && value.bar !== undefined) {
-    onError('both foo and bar may not be defined', 'foo|bar', null);
-  }
-}
-```
+## i18n
 
 ## License
 

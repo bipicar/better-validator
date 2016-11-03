@@ -23,4 +23,14 @@ module.exports = class IsString extends Base {
       };
     }
   }
+
+  isMatch(regex) {
+    this.satisfies('isMatch', (value) => regex.test(value));
+    return this;
+  }
+
+  notMatch(regex) {
+    this.satisfies('notMatch', (value) => !regex.test(value));
+    return this;
+  }
 };

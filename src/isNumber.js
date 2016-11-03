@@ -20,23 +20,23 @@ module.exports = class IsNumber extends Base {
     return this;
   }
 
-  gt(threshhold) {
-    this.satisfies('gt', (value) => value > threshhold);
+  gt(threshold) {
+    this.satisfies('gt', (value) => value > threshold);
     return this;
   }
 
-  gte(threshhold) {
-    this.satisfies('gte', (value) => value >= threshhold);
+  gte(threshold) {
+    this.satisfies('gte', (value) => value >= threshold);
     return this;
   }
 
-  lt(threshhold) {
-    this.satisfies('lt', (value) => value < threshhold);
+  lt(threshold) {
+    this.satisfies('lt', (value) => value < threshold);
     return this;
   }
 
-  lte(threshhold) {
-    this.satisfies('lte', (value) => value <= threshhold);
+  lte(threshold) {
+    this.satisfies('lte', (value) => value <= threshold);
     return this;
   }
 
