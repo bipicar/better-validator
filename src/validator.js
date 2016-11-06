@@ -103,7 +103,16 @@ class Validator {
   }
 
   run() {
-    return _.flatten(_.map(this.tests, (test) => test.validator.test(test.value)));
+    const failures = _.flatten(_.map(this.tests, (test) => test.validator.test(test.value)));
+
+    const formatter = this.options.failureFormatter;
+    if (!formatter) {
+      return failures;
+    }
+
+    return _.map(failures, (failure) => {
+      return _.isFunction(formatter) ? formatter(failure) : formatter.format(failure);
+    })
   }
 
   static get defaultOptions() {

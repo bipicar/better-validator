@@ -12,7 +12,7 @@ module.exports = class IsString extends Base {
       if (typeof fn !== 'function') continue;
 
       this[key] = (...args) => {
-        this.satisfies(key, (value) => Base.hasValue(value) && fn.call(validator, value, ...args));
+        this.satisfies(key, (value) => !Base.hasValue(value) || fn.call(validator, value, ...args));
         return this;
       };
 
@@ -25,12 +25,12 @@ module.exports = class IsString extends Base {
   }
 
   isMatch(regex) {
-    this.satisfies('isMatch', (value) => regex.test(value));
+    this.satisfies('isMatch', (value) => !Base.hasValue(value) || regex.test(value));
     return this;
   }
 
   notMatch(regex) {
-    this.satisfies('notMatch', (value) => !regex.test(value));
+    this.satisfies('notMatch', (value) => !Base.hasValue(value) || !regex.test(value));
     return this;
   }
 };

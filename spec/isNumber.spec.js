@@ -59,8 +59,8 @@ describe('isNumber', () => {
     };
 
     runTests(rule, [
-      {value: null, fail: 'integer'},
-      {value: undefined, fail: 'integer'},
+      {value: null},
+      {value: undefined},
       {value: 0},
       {value: -1},
       {value: 1},
@@ -77,8 +77,8 @@ describe('isNumber', () => {
     };
 
     runTests(rule, [
-      {value: null, fail: 'isNegative'},
-      {value: undefined, fail: 'isNegative'},
+      {value: null},
+      {value: undefined},
       {value: 0, fail: 'isNegative'},
       {value: -1},
       {value: 1, fail: 'isNegative'},
@@ -117,8 +117,8 @@ describe('isNumber', () => {
     };
 
     runTests(rule, [
-      {value: null, fail: 'isZero'},
-      {value: undefined, fail: 'isZero'},
+      {value: null},
+      {value: undefined},
       {value: 0},
       {value: -1, fail: 'isZero'},
       {value: 1, fail: 'isZero'},

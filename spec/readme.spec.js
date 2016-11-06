@@ -51,8 +51,7 @@ describe('readme.md', () => {
       expect(errors).toContain(jasmine.objectContaining({path: ['hint'], value: 32, test: 'isString'}));
     });
 
-    xit('Validate children of an array', () => {
-      // TODO
+    it('Validate children of an array', () => {
       const validator = new Validator();
 
       const array = [{count: 5, hint: 32}];

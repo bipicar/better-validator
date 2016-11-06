@@ -66,8 +66,7 @@ describe('basic usage', () => {
     });
 
     expect(errors).toBeDefined();
-    expect(errors.length).toBe(1);
-    expect(errors).toContain(jasmine.objectContaining({path: [], test: 'isEmail'}));
+    expect(errors.length).toBe(0);
 
     errors = validator('aslkjdf', (item) => {
       item.isString();
