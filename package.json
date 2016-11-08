@@ -23,9 +23,10 @@
     "url": "https://bitbucket.org/gregbacchus/better-validator.git"
   },
   "scripts": {
+    "test": "node_modules/jasmine/bin/jasmine.js",
+    "lint": "node_modules/eslint/bin/eslint.js .",
     "preversion": "[[ \"$(git symbolic-ref --short HEAD)\" != \"master\" ]] && echo \"Must be in master branch\" && exit 1 || npm run lint -s && npm test -s",
-    "postversion": "git push && git push --tags && npm publish",
-    "test": "jasmine"
+    "postversion": "git push && git push --tags && npm publish"
   },
   "author": "Greg Bacchus",
   "dependencies": {
@@ -34,7 +35,7 @@
   },
   "devDependencies": {
     "body-parser": "^1.15.2",
-    "eslint": "^3.7.1",
+    "eslint": "^3.9.1",
     "express": "^4.14.0",
     "istanbul": "^0.4.5",
     "jasmine": "^2.5.2",
