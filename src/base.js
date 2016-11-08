@@ -57,7 +57,7 @@ module.exports = class Base {
         // failed
         failures.push({
           path: this.path,
-          test: test.name,
+          failed: test.name,
           rule: test.rule,
           value
         });

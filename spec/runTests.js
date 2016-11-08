@@ -16,7 +16,7 @@ const OPTIONS_RAW = {};
   for (const test of tests) {
     const failures = validator(test.value, rule);
     if (test.fail) {
-      expect(failures).toContain(jasmine.objectContaining({path: [], test: test.fail}));
+      expect(failures).toContain(jasmine.objectContaining({path: [], failed: test.fail}));
     } else {
       expect(failures).toEqual([]);
     }

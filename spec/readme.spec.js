@@ -21,7 +21,7 @@ describe('readme.md', () => {
       validator('not number').isNumber();
       const errors = validator.run(); // => [{path: [], value: 'not number', test: 'isNumber'}]
       expect(errors.length).toBe(1);
-      expect(errors).toContain(jasmine.objectContaining({path: [], value: 'not number', test: 'isNumber'}));
+      expect(errors).toContain(jasmine.objectContaining({path: [], value: 'not number', failed: 'isNumber'}));
     });
 
     it('Validate multiple objects at once', () => {
@@ -34,7 +34,7 @@ describe('readme.md', () => {
       validator(body).display('body').required();
       const errors = validator.run(); // => [{path: ['body'], value: null, test: 'required'}]
       expect(errors.length).toBe(1);
-      expect(errors).toContain(jasmine.objectContaining({path: ['body'], value: null, test: 'required'}));
+      expect(errors).toContain(jasmine.objectContaining({path: ['body'], value: null, failed: 'required'}));
     });
 
     it('Validate children of an object', () => {
@@ -48,7 +48,7 @@ describe('readme.md', () => {
       });
       const errors = validator.run(); // => [{path: ['hint'], value: 32, test: 'isString'}]
       expect(errors.length).toBe(1);
-      expect(errors).toContain(jasmine.objectContaining({path: ['hint'], value: 32, test: 'isString'}));
+      expect(errors).toContain(jasmine.objectContaining({path: ['hint'], value: 32, failed: 'isString'}));
     });
 
     it('Validate children of an array', () => {
@@ -62,7 +62,7 @@ describe('readme.md', () => {
       });
       const errors = validator.run(); // => [{path: [0, 'hint'], value: 32, test: 'isString'}]
       expect(errors.length).toBe(1);
-      expect(errors).toContain(jasmine.objectContaining({path: [0, 'hint'], value: 32, test: 'isString'}));
+      expect(errors).toContain(jasmine.objectContaining({path: [0, 'hint'], value: 32, failed: 'isString'}));
     });
 
     it('Re-usable validation parts 1', () => {
@@ -89,7 +89,7 @@ describe('readme.md', () => {
       });
       const errors = validator.run(); // => [{path: ['hint'], value: '32', test: 'isNumber'}]
       expect(errors.length).toBe(1);
-      expect(errors).toContain(jasmine.objectContaining({path: ['hint'], value: '32', test: 'isNumber'}));
+      expect(errors).toContain(jasmine.objectContaining({path: ['hint'], value: '32', failed: 'isNumber'}));
     });
 
   });
@@ -119,7 +119,7 @@ describe('readme.md', () => {
       it('will return 400 if not valid 1', (done) => {
         request(app)
           .get('/test?date=2016-10-26T12:43:00Z')
-          .expect(400, [{path: ['?', 'email'], test: 'required'}])
+          .expect(400, [{path: ['?', 'email'], failed: 'required'}])
           .end((err) => {
             if (err) fail(err);
             done();
@@ -129,7 +129,7 @@ describe('readme.md', () => {
       it('will return 400 if not valid 2', (done) => {
         request(app)
           .get('/test?email=test&date=2016-10-26T12:43:00Z')
-          .expect(400, [{path: ['?', 'email'], value: 'test', test: 'isEmail'}])
+          .expect(400, [{path: ['?', 'email'], value: 'test', failed: 'isEmail'}])
           .end((err) => {
             if (err) fail(err);
             done();
@@ -165,7 +165,7 @@ describe('readme.md', () => {
         request(app)
           .post('/test')
           .send({count: 5, hint: 'test', foo: 'bar'})
-          .expect(400, [{path: ['foo'], value: 'bar', test: 'strict'}])
+          .expect(400, [{path: ['foo'], value: 'bar', failed: 'strict'}])
           .end((err) => {
             if (err) fail(err);
             done();
@@ -176,7 +176,7 @@ describe('readme.md', () => {
         request(app)
           .post('/test')
           .send({hint: 'test'})
-          .expect(400, [{path: ['count'], test: 'required'}])
+          .expect(400, [{path: ['count'], failed: 'required'}])
           .end((err) => {
             if (err) fail(err);
             done();
@@ -187,7 +187,7 @@ describe('readme.md', () => {
         request(app)
           .post('/test')
           .send({count: 5, hint: 123})
-          .expect(400, [{path: ['hint'], value: 123, test: 'isString'}])
+          .expect(400, [{path: ['hint'], value: 123, failed: 'isString'}])
           .end((err) => {
             if (err) fail(err);
             done();

@@ -40,7 +40,7 @@ module.exports = class IsObject extends Base {
 
         return {
           path,
-          test: 'strict',
+          failed: 'strict',
           value: value[property]
         };
       })

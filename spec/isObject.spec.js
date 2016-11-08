@@ -13,8 +13,8 @@ describe('isObject', () => {
 
     expect(errors).toBeDefined();
     expect(errors.length).toBe(2);
-    expect(errors).toContain(jasmine.objectContaining({path: ['test1'], test: 'required'}));
-    expect(errors).toContain(jasmine.objectContaining({path: ['test2'], test: 'isObject'}));
+    expect(errors).toContain(jasmine.objectContaining({path: ['test1'], failed: 'required'}));
+    expect(errors).toContain(jasmine.objectContaining({path: ['test2'], failed: 'isObject'}));
   });
 
   it('child validator', () => {
@@ -36,17 +36,17 @@ describe('isObject', () => {
     expect(errors).toBeDefined();
     expect(errors.length).toBe(8);
 
-    expect(errors).toContain(jasmine.objectContaining({path: ['test2', 'foo'], test: 'isString'}));
-    expect(errors).toContain(jasmine.objectContaining({path: ['test2', 'bar'], test: 'required'}));
-    expect(errors).toContain(jasmine.objectContaining({path: ['test2', 'test'], test: 'required'}));
+    expect(errors).toContain(jasmine.objectContaining({path: ['test2', 'foo'], failed: 'isString'}));
+    expect(errors).toContain(jasmine.objectContaining({path: ['test2', 'bar'], failed: 'required'}));
+    expect(errors).toContain(jasmine.objectContaining({path: ['test2', 'test'], failed: 'required'}));
 
-    expect(errors).toContain(jasmine.objectContaining({path: ['test3', 'test'], test: 'required'}));
+    expect(errors).toContain(jasmine.objectContaining({path: ['test3', 'test'], failed: 'required'}));
 
-    expect(errors).toContain(jasmine.objectContaining({path: ['test4', 'bar'], test: 'required'}));
-    expect(errors).toContain(jasmine.objectContaining({path: ['test4', 'test'], test: 'required'}));
+    expect(errors).toContain(jasmine.objectContaining({path: ['test4', 'bar'], failed: 'required'}));
+    expect(errors).toContain(jasmine.objectContaining({path: ['test4', 'test'], failed: 'required'}));
 
-    expect(errors).toContain(jasmine.objectContaining({path: ['test5', 'bar'], test: 'required'}));
-    expect(errors).toContain(jasmine.objectContaining({path: ['test5', 'test'], test: 'required'}));
+    expect(errors).toContain(jasmine.objectContaining({path: ['test5', 'bar'], failed: 'required'}));
+    expect(errors).toContain(jasmine.objectContaining({path: ['test5', 'test'], failed: 'required'}));
 
   });
 
@@ -68,12 +68,12 @@ describe('isObject', () => {
     expect(errors).toBeDefined();
     expect(errors.length).toBe(4);
 
-    expect(errors).toContain(jasmine.objectContaining({path: ['test2', 'foo'], test: 'notEmail'}));
-    expect(errors).toContain(jasmine.objectContaining({path: ['test2', 'bar'], test: 'required'}));
+    expect(errors).toContain(jasmine.objectContaining({path: ['test2', 'foo'], failed: 'notEmail'}));
+    expect(errors).toContain(jasmine.objectContaining({path: ['test2', 'bar'], failed: 'required'}));
 
-    expect(errors).toContain(jasmine.objectContaining({path: ['test4', 'bar'], test: 'required'}));
+    expect(errors).toContain(jasmine.objectContaining({path: ['test4', 'bar'], failed: 'required'}));
 
-    expect(errors).toContain(jasmine.objectContaining({path: ['test5', 'bar'], test: 'required'}));
+    expect(errors).toContain(jasmine.objectContaining({path: ['test5', 'bar'], failed: 'required'}));
 
   });
 
@@ -93,7 +93,7 @@ describe('isObject', () => {
     expect(errors).toBeDefined();
     expect(errors.length).toBe(1);
 
-    expect(errors).toContain(jasmine.objectContaining({path: ['test2', 'test'], test: 'strict'}));
+    expect(errors).toContain(jasmine.objectContaining({path: ['test2', 'test'], failed: 'strict'}));
 
   });
 

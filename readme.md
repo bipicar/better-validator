@@ -30,7 +30,7 @@ const errors = validator.run(); // => []
 const validator = new Validator();
 
 validator('not number').isNumber();
-const errors = validator.run(); // => [{path: [], value: 'not number', test: 'isNumber'}]
+const errors = validator.run(); // => [{path: [], value: 'not number', failed: 'isNumber'}]
 ```
 
 Validate multiple objects at once:
@@ -43,7 +43,7 @@ const body = null;
 
 validator(query).display('query').required();
 validator(body).display('body').required();
-const errors = validator.run(); // => [{path: ['body'], value: null, test: 'required'}]
+const errors = validator.run(); // => [{path: ['body'], value: null, failed: 'required'}]
 ```
 
 Validate children of an object:
@@ -57,7 +57,7 @@ validator(query).required().isObject((obj) => {
   obj('count').required().isNumber().integer(); // pass
   obj('hint').isString(); // fail
 });
-const errors = validator.run(); // => [{path: ['hint'], value: 32, test: 'isString'}]
+const errors = validator.run(); // => [{path: ['hint'], value: 32, failed: 'isString'}]
 ```
 
 Validate children of an array:
@@ -71,7 +71,7 @@ validator(array).required().isArrayOf((child) => {
   child('count').required().isNumber().integer(); // pass
   child('hint').isString(); // fail
 });
-const errors = validator.run(); // => [{path: [0, 'hint'], value: 32, test: 'isString'}]
+const errors = validator.run(); // => [{path: [0, 'hint'], value: 32, failed: 'isString'}]
 ```
 
 Re-usable validation parts:
@@ -97,7 +97,7 @@ validator(query).required().isObject((child) => {
   child('count').check(rule).lte(10); // pass
   child('hint').check(rule); // fail
 });
-const errors = validator.run(); // => [{path: ['hint'], value: '32', test: 'isNumber'}]
+const errors = validator.run(); // => [{path: ['hint'], value: '32', failed: 'isNumber'}]
 ```
 
 Using with express.js
@@ -147,7 +147,7 @@ If the body content does not pass the given validation check, the validator will
         {
             "parameter": "children[0].prop",
             "value": "zxzx",
-            "test": "required"
+            "failed": "required"
         }
     ]
 }

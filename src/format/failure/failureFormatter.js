@@ -28,7 +28,7 @@ class FailureFormatter {
     return {
       [this.options.pathElement]: helpers.format(this.options.pathFormatter, failure.path),
       value: failure.value,
-      test: failure.test
+      failed: failure.failed
     };
   }
 }
