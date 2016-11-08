@@ -28,4 +28,14 @@ module.exports = class IsArrayOf extends Base {
       return passed;
     });
   }
+
+  length(expected) {
+    this.satisfies('length', (value) => !Base.hasValue(value) || value.length === expected);
+    return this;
+  }
+
+  lengthInRange(lower, upper) {
+    this.satisfies('lengthInRange', (value) => !Base.hasValue(value) || (lower === undefined || value.length >= lower) && (upper === undefined || value.length <= upper));
+    return this;
+  }
 };

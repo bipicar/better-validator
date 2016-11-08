@@ -305,18 +305,41 @@ validator(value).isNumber().integer();
 ### isArrayOf
 
 Makes sure that the item is of type array, and validates the items. Also can specify minimum and maximum length of the array.
-TODO
+
 ```javascript
 validator(value).isArrayOf((item) => {
-});
+  item('foo').isString();
+  item('bar').isString().required();
+  item().strict();
+}).length(2);
+```
+
+```javascript
+validator(value).isArrayOf((item) => {
+  // ...
+}).lengthInRange(4, 8); // 4 to 8 inclusive
+```
+
+```javascript
+validator(value).isArrayOf((item) => {
+  // ...
+}).lengthInRange(undefined, 8); // less than or equal to 8
+```
+
+```javascript
+validator(value).isArrayOf((item) => {
+  // ...
+}).lengthInRange(1); // one or more
 ```
 
 ## Your Own Validators
 TODO
 
 ## Formatting Result / Errors
+TODO
 
 ## i18n
+TODO
 
 ## License
 
