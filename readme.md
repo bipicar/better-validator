@@ -103,7 +103,8 @@ const errors = validator.run(); // => [{path: ['hint'], value: '32', test: 'isNu
 Using with express.js
 
 ```javascript
-const check = Validator.expressMiddleware();
+const Formatter = require('better-validator/format/response/wrapperFormatter');
+const check = Validator.expressMiddleware({responseFormatter: new Formatter()});
 const queryRule = (query) => {
   query('email').isEmail();
   query('date').isISO8601();
@@ -124,7 +125,8 @@ TODO
 Using with koa.js
 
 ```javascript
-const check = Validator.koaMiddleware();
+const Formatter = require('better-validator/format/response/wrapperFormatter');
+const check = Validator.koaMiddleware({responseFormatter: new Formatter()});
 const queryRule = (query) => {
   query('email').isEmail();
   query('date').isISO8601();
@@ -143,7 +145,8 @@ If the body content does not pass the given validation check, the validator will
 400 Bad Request
 
 {
-    "errors": [
+    "type": "ValidationError"
+    "failures": [
         {
             "parameter": "children[0].prop",
             "value": "zxzx",

@@ -1,9 +1,10 @@
 const _ = require('underscore');
 
+const helpers = require('../../helpers');
 const PathFormatter = require('../path/pathFormatter');
 
 const DEFAULT_OPTIONS = {
-  pathName: 'parameter',
+  pathElement: 'parameter',
   pathFormatter: new PathFormatter()
 };
 
@@ -11,7 +12,7 @@ class FailureFormatter {
   /**
    * Create new error formatter
    * @param {object} [options] - options
-   * @param {string} [options.pathName] - name of formatted path property, default = 'parameter'
+   * @param {string} [options.pathElement] - name of formatted path property, default = 'parameter'
    * @param {function|object} [options.pathFormatter] - path formatter, default format 'foo[0].bar'
    */
   constructor(options) {
@@ -25,9 +26,7 @@ class FailureFormatter {
    */
   format(failure) {
     return {
-      [this.options.pathName]: _.isFunction(this.options.pathFormatter)
-        ? this.options.pathFormatter(failure.path)
-        : this.options.pathFormatter.format(failure.path),
+      [this.options.pathElement]: helpers.format(this.options.pathFormatter, failure.path),
       value: failure.value,
       test: failure.test
     };

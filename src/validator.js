@@ -1,5 +1,6 @@
 const _ = require('underscore');
 
+const helpers = require('./helpers');
 const Base = require('./base');
 const IsAnything = require('./isAnything');
 const IsObjectOfString = require('./isObjectOfString');
@@ -69,14 +70,14 @@ class KoaMiddleware {
   }
 
   *checkErrors(validator, ctx, next) {
-    const errors = validator.run();
-    if (!errors || !errors.length) {
+    const failures = validator.run();
+    if (!failures || !failures.length) {
       yield next();
       return;
     }
 
     ctx.status(400);
-    ctx.body = errors;
+    ctx.body = helpers.format(this.options.responseFormatter, failures);
   }
 }
 
@@ -91,7 +92,7 @@ class Validator {
       };
 
       if (rules && _.isFunction(rules)) {
-        rules(test.validator)
+        rules(test.validator);
         return test.validator.test(test.value);
       }
 
@@ -111,8 +112,8 @@ class Validator {
     }
 
     return _.map(failures, (failure) => {
-      return _.isFunction(formatter) ? formatter(failure) : formatter.format(failure);
-    })
+      return helpers.format(formatter, failure);
+    });
   }
 
   static get defaultOptions() {
@@ -127,7 +128,7 @@ class Validator {
     return new ExpressMiddleware(options)
   }
 
-  static koaMiddleware() {
+  static koaMiddleware(options) {
     return new KoaMiddleware(options)
   }
 }
