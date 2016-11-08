@@ -9,8 +9,8 @@ class PathFormatter {
   /**
    * Create new path formatter
    * @param {object} [options] - options
-   * @param {string} [options.separator] - path element separator
-   * @param {string} [options.initialSeparator] - path element separator for before first element
+   * @param {string} [options.separator] - path element separator, default = '.'
+   * @param {string} [options.initialSeparator] - path element separator for before first element, default = ''
    */
   constructor(options) {
     this.options = _.defaults({}, options, DEFAULT_OPTIONS);

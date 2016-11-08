@@ -92,12 +92,6 @@ describe('readme.md', () => {
       expect(errors).toContain(jasmine.objectContaining({path: ['hint'], value: '32', test: 'isNumber'}));
     });
 
-    xit('___', () => {
-
-      expect(errors.length).toBe(1);
-      expect(errors).toContain(jasmine.objectContaining({path: ['body'], value: null, test: 'required'}));
-    });
-
   });
 
   describe('express.js', () => {
