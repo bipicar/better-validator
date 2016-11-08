@@ -119,9 +119,6 @@ app.post('/', [check.query(queryRule), check.body(bodyRule), function(req, res) 
 }
 ```
 
-
-TODO
-
 Using with koa.js
 
 ```javascript
@@ -150,7 +147,7 @@ If the body content does not pass the given validation check, the validator will
         {
             "parameter": "children[0].prop",
             "value": "zxzx",
-            "message": "Invalid value. Value must match required pattern."
+            "test": "required"
         }
     ]
 }
