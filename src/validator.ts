@@ -1,16 +1,16 @@
+import {Failure} from "./base";
+import {IsAnything} from "./isAnything";
 import {ExpressMiddleware} from "./middleware/expressMiddleware";
 import {KoaMiddleware} from "./middleware/koaMiddleware";
 import {ValidatorFactory} from "./validatorFactory";
-import {Failure} from "./base";
-import {IsAnything} from "./isAnything";
 
-declare type factoryFunction = (value:any, rules?) => IsAnything | Failure[];
-declare type tester = {run?:() => Failure[]}
+declare type factoryFunction = (value: any, rules?) => IsAnything | Failure[];
+declare type tester = {run?: () => Failure[]}
 
 export class Validator {
   constructor(options) {
     const factory = new ValidatorFactory(options);
-    const fn:factoryFunction&tester = (value, rules?) => {
+    const fn: factoryFunction&tester = (value, rules?) => {
       if (rules) {
         return factory.createAndRun(value, rules);
       }
@@ -29,10 +29,10 @@ export class Validator {
   };
 
   static expressMiddleware(options) {
-    return new ExpressMiddleware(options)
+    return new ExpressMiddleware(options);
   }
 
   static koaMiddleware(options) {
-    return new KoaMiddleware(options)
+    return new KoaMiddleware(options);
   }
 }

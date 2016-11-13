@@ -30,6 +30,7 @@
   },
   "author": "Greg Bacchus",
   "dependencies": {
+    "tslint": "^3.15.1",
     "underscore": "^1.8.3",
     "validator": "^6.0.0"
   },
