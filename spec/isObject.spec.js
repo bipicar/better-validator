@@ -1,10 +1,10 @@
-const Validator = require('../src/validator');
+const v = require('../dist/js/validator');
 
 const OPTIONS_RAW = {};
 
 describe('isObject', () => {
   it('basics', () => {
-    const validator = new Validator(OPTIONS_RAW);
+    const validator = new v.Validator(OPTIONS_RAW);
     validator(null).display('test1').required().isObject();
     validator('test').display('test2').required().isObject();
     validator({}).display('test3').required().isObject();
@@ -18,7 +18,7 @@ describe('isObject', () => {
   });
 
   it('child validator', () => {
-    const validator = new Validator(OPTIONS_RAW);
+    const validator = new v.Validator(OPTIONS_RAW);
     const childValidator = (child) => {
       child('foo').isString();
       child('bar').required().isString();
@@ -51,7 +51,7 @@ describe('isObject', () => {
   });
 
   it('child validator - more', () => {
-    const validator = new Validator(OPTIONS_RAW);
+    const validator = new v.Validator(OPTIONS_RAW);
     const childValidator = (child) => {
       child('foo').isString().notEmail();
       child('bar').required().isString().isEmail();
@@ -78,7 +78,7 @@ describe('isObject', () => {
   });
 
   it('must fail strict() when extra properties are present', () => {
-    const validator = new Validator(OPTIONS_RAW);
+    const validator = new v.Validator(OPTIONS_RAW);
     const childValidator = (child) => {
       child('foo').isString().notEmail();
       child('bar').required().isString().isEmail();

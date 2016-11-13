@@ -1,9 +1,10 @@
-const validator = require('validator');
+/// <reference path="../typings/validator/validator.d.ts" />
 
-const Base = require('./base');
+import * as validator from "validator";
+import {Base} from "./base";
 
-module.exports = class IsString extends Base {
-  constructor(path) {
+export class IsString extends Base {
+  constructor(path:(string|number)[]) {
     super(path);
 
     for (const key of Object.keys(validator)) {
@@ -24,13 +25,13 @@ module.exports = class IsString extends Base {
     }
   }
 
-  isMatch(regex) {
+  isMatch(regex:RegExp):this {
     this.satisfies('isMatch', (value) => !Base.hasValue(value) || regex.test(value));
     return this;
   }
 
-  notMatch(regex) {
+  notMatch(regex:RegExp):this {
     this.satisfies('notMatch', (value) => !Base.hasValue(value) || !regex.test(value));
     return this;
   }
-};
+}

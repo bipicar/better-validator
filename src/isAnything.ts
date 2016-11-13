@@ -1,13 +1,14 @@
-const _ = require('underscore');
+/// <reference path="../typings/underscore/underscore.d.ts" />
 
-const Base = require('./base');
-const IsNumber = require('./isNumber');
-const IsString = require('./isString');
-const IsObject = require('./isObject');
-const IsArrayOf = require('./isArrayOf');
+import * as _ from 'underscore';
+import {Base} from './base';
+import {IsNumber} from './isNumber';
+import {IsString} from './isString';
+import {IsObject} from './isObject';
+import {IsArrayOf} from './isArrayOf';
 
-module.exports = class IsAnything extends Base {
-  constructor(path) {
+export class IsAnything extends Base {
+  constructor(path:(string|number)[]) {
     super(path);
   }
 
@@ -24,14 +25,17 @@ module.exports = class IsAnything extends Base {
   }
 
   isObject(objectValidator) {
-    const child = new IsObject(this.path, objectValidator);
+    const child = new IsObject(this.path, objectValidator, IsAnything, 'isAnything');
     this.satisfies('isObject', (value) => (!Base.hasValue(value) || _.isObject(value)) && child.test(value));
     return child;
   }
 
   isArrayOf(childValidator) {
-    const child = new IsArrayOf(this.path, childValidator); // TODO validate children
+    const factory = (path) => {
+      return new IsObject(path, childValidator, IsAnything, 'isAnything');
+    };
+    const child = new IsArrayOf(this.path, factory, 'isObject');
     this.satisfies('isArrayOf', (value) => (!Base.hasValue(value) || _.isArray(value)) && child.test(value));
     return child;
   }
-};
+}

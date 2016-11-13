@@ -1,4 +1,4 @@
-const Validator = require('../src/validator');
+const v = require('../dist/js/validator');
 
 const OPTIONS_RAW = {};
 
@@ -11,7 +11,7 @@ const OPTIONS_RAW = {};
  * @return {void}
  */
  function runTests(rule, tests) {
-  const validator = new Validator(OPTIONS_RAW);
+  const validator = new v.Validator(OPTIONS_RAW);
 
   for (const test of tests) {
     const failures = validator(test.value, rule);

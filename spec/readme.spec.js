@@ -2,13 +2,13 @@ const request = require('supertest');
 const express = require('express');
 const bodyParser = require('body-parser')
 
-const Validator = require('../src/validator');
+const v = require('../dist/js/validator');
 const runTests = require('./runTests');
 
 describe('readme.md', () => {
   describe('Basic usage', () => {
     it('1', () => {
-      const validator = new Validator();
+      const validator = new v.Validator();
 
       validator(123).isNumber();
       const errors = validator.run(); // => []
@@ -16,7 +16,7 @@ describe('readme.md', () => {
     });
 
     it('2', () => {
-      const validator = new Validator();
+      const validator = new v.Validator();
 
       validator('not number').isNumber();
       const errors = validator.run(); // => [{path: [], value: 'not number', test: 'isNumber'}]
@@ -25,7 +25,7 @@ describe('readme.md', () => {
     });
 
     it('Validate multiple objects at once', () => {
-      const validator = new Validator();
+      const validator = new v.Validator();
 
       const query = {};
       const body = null;
@@ -38,7 +38,7 @@ describe('readme.md', () => {
     });
 
     it('Validate children of an object', () => {
-      const validator = new Validator();
+      const validator = new v.Validator();
 
       const query = {count: 5, hint: 32};
 
@@ -52,7 +52,7 @@ describe('readme.md', () => {
     });
 
     it('Validate children of an array', () => {
-      const validator = new Validator();
+      const validator = new v.Validator();
 
       const array = [{count: 5, hint: 32}];
 
@@ -66,7 +66,7 @@ describe('readme.md', () => {
     });
 
     it('Re-usable validation parts 1', () => {
-      const validator = new Validator();
+      const validator = new v.Validator();
 
       const rule = (item) => {
         item.isNumber().integer().isPositive();
@@ -77,7 +77,7 @@ describe('readme.md', () => {
     });
 
     it('Re-usable validation parts 2', () => {
-      const validator = new Validator();
+      const validator = new v.Validator();
 
       const query = {count: 5, hint: '32'};
 
@@ -100,7 +100,7 @@ describe('readme.md', () => {
         query('email').required().isEmail();
         query('date').required().isISO8601();
       };
-      const check = Validator.expressMiddleware();
+      const check = v.Validator.expressMiddleware();
       const app = express();
       app.get('/test', check.query(queryRule), (req, res) => {
         res.status(200).send();
@@ -143,7 +143,7 @@ describe('readme.md', () => {
         body('hint').required().isString();
         body().strict();
       };
-      const check = Validator.expressMiddleware();
+      const check = v.Validator.expressMiddleware();
       const app = express();
       app.use(bodyParser.json());
       app.post('/test', check.body(bodyRule), (req, res) => {
