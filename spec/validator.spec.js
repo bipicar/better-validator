@@ -25,7 +25,7 @@ const OPTIONS_RAW = {};
 
 describe('basic usage', () => {
   it('chained rules', () => {
-    const validator = new v.Validator.Validator(OPTIONS_RAW);
+    const validator = new v.Validator(OPTIONS_RAW);
     validator('test').display('test1').required().isString().notEmpty().notLowercase().isEmail();
     validator('test').display('test2').required().isString().notEmpty().isLowercase();
     validator(null).display('test3').required().isString().notEmpty();
