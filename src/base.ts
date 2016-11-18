@@ -31,7 +31,7 @@ export class Base {
   }
 
   required():Base {
-    const child = new this.constructor(this.path);
+    const child = new (<typeof Base>this.constructor)(this.path);
     this.satisfies('required', (value) => Base.hasValue(value) && child.test(value));
     return child;
   }
