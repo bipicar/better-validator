@@ -74,7 +74,7 @@ class KoaMiddleware {
   *checkErrors(validator, ctx, next) {
     const failures = validator.run();
     if (!failures || !failures.length) {
-      yield next();
+      yield next;
       return;
     }
 
