@@ -4,7 +4,7 @@ const sourcemaps = require('gulp-sourcemaps');
 
 gulp.task('build:ts', ['clean:js'], function() {
   const options = {
-    target: 'ES6',
+    target: 'es6',
     module: 'commonjs',
     moduleResolution: 'node',
     declaration: true
