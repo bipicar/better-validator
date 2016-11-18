@@ -14,7 +14,7 @@ const DEFAULT_OPTIONS = {
 
 class ExpressMiddleware {
   constructor(options) {
-    this.options = options;
+    this.options = _.defaults({}, options);
   }
 
   query(rule) {
@@ -48,24 +48,26 @@ class ExpressMiddleware {
 
 class KoaMiddleware {
   constructor(options) {
-    this.options = options;
+    this.options = _.defaults({}, options);
   }
 
   query(rule) {
+    const self = this;
     return function *(next) {
-      const validator = new Validator(this.options);
+      const validator = new Validator(self.options);
       const anythingValidator = validator(this.query).display('?');
       const objectValidator = new IsObjectOfString(anythingValidator.path, rule);
       anythingValidator.satisfies('isObjectOfString', (value) => (!Base.hasValue(value) || _.isObject(value)) && objectValidator.test(value));
-      yield this.checkErrors(validator, this, next);
+      yield self.checkErrors(validator, self, next);
     }
   }
 
   body(rule) {
+    const self = this;
     return function *(next) {
-      const validator = new Validator(this.options);
+      const validator = new Validator(self.options);
       validator(this.request.body).isObject(rule);
-      yield this.checkErrors(validator, this, next);
+      yield self.checkErrors(validator, self, next);
     }
   }
 
@@ -76,7 +78,7 @@ class KoaMiddleware {
       return;
     }
 
-    ctx.status(400);
+    ctx.status = 400;
     ctx.body = helpers.format(this.options.responseFormatter, failures);
   }
 }
