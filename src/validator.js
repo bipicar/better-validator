@@ -58,7 +58,7 @@ class KoaMiddleware {
       const anythingValidator = validator(this.query).display('?');
       const objectValidator = new IsObjectOfString(anythingValidator.path, rule);
       anythingValidator.satisfies('isObjectOfString', (value) => (!Base.hasValue(value) || _.isObject(value)) && objectValidator.test(value));
-      yield self.checkErrors(validator, self, next);
+      yield self.checkErrors(validator, this, next);
     }
   }
 
@@ -67,7 +67,7 @@ class KoaMiddleware {
     return function *(next) {
       const validator = new Validator(self.options);
       validator(this.request.body).isObject(rule);
-      yield self.checkErrors(validator, self, next);
+      yield self.checkErrors(validator, this, next);
     }
   }
 
