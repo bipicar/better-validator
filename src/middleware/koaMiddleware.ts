@@ -15,31 +15,33 @@ export class KoaMiddleware {
   }
 
   query(rule) {
+    const self = this;
     return function *(next) {
-      const validator = new ValidatorFactory(this.options);
+      const validator = new ValidatorFactory(self.options);
       const anythingValidator = validator.create(this.query).display('?');
       const objectValidator = new IsObject(anythingValidator.path, rule, IsString, 'isString');
       anythingValidator.satisfies('isObjectOfString', (value) => (!Base.hasValue(value) || _.isObject(value)) && objectValidator.test(value));
-      yield this.checkErrors(validator, this, next);
+      yield self.checkErrors(validator, this, next);
     }
   }
 
   body(rule) {
+    const self = this;
     return function *(next) {
-      const validator = new ValidatorFactory(this.options);
+      const validator = new ValidatorFactory(self.options);
       validator.create(this.request.body).isObject(rule);
-      yield this.checkErrors(validator, this, next);
+      yield self.checkErrors(validator, this, next);
     }
   }
 
   *checkErrors(validator, ctx, next) {
     const failures = validator.run();
     if (!failures || !failures.length) {
-      yield next();
+      yield next;
       return;
     }
 
-    ctx.status(400);
+    ctx.status = 400;
     ctx.body = Helpers.format(this.options.responseFormatter, failures);
   }
 }

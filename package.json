@@ -28,6 +28,7 @@
     "preversion": "[[ \"$(git symbolic-ref --short HEAD)\" != \"master\" ]] && echo \"Must be in master branch\" && exit 1 || npm run lint -s && npm test -s",
     "postversion": "git push && git push --tags && npm publish"
   },
+  "main": "dist/js/validator.js",
   "author": "Greg Bacchus",
   "dependencies": {
     "tslint": "^3.15.1",

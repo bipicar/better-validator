@@ -7,7 +7,7 @@ import {ValidatorFactory} from "./validatorFactory";
 declare type factoryFunction = (value: any, rules?) => IsAnything | Failure[];
 declare type tester = {run?: () => Failure[]}
 
-export class Validator {
+module.exports = class Validator {
   constructor(options) {
     const factory = new ValidatorFactory(options);
     const fn: factoryFunction&tester = (value, rules?) => {
