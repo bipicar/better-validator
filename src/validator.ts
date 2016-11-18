@@ -7,7 +7,7 @@ import {ValidatorFactory} from "./validatorFactory";
 declare type factoryFunction = (value: any, rules?) => IsAnything | Failure[];
 declare type tester = {run?: () => Failure[]}
 
-module.exports = class Validator {
+class Validator {
   constructor(options) {
     const factory = new ValidatorFactory(options);
     const fn: factoryFunction&tester = (value, rules?) => {
@@ -36,3 +36,5 @@ module.exports = class Validator {
     return new KoaMiddleware(options);
   }
 }
+
+export = Validator;
