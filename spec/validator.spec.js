@@ -1,4 +1,4 @@
-const v = require('../dist/js/validator');
+const Validator = require('../dist/js/validator');
 
 const OPTIONS_RAW = {};
 
@@ -7,25 +7,25 @@ const OPTIONS_RAW = {};
 //     const options = {
 //       foo: 'bar'
 //     };
-//     const validator = new v.Validator(options);
+//     const validator = new Validator(options);
 //     expect(validator.options).toBeDefined();
 //     expect(validator.options.foo).toBe('bar');
 //   });
 //
 //   it('must not require options', () => {
-//     const validator = new v.Validator();
+//     const validator = new Validator();
 //     expect(validator.options).toBeDefined();
 //   });
 //
 //   it('must provide default options', () => {
-//     const validator = new v.Validator();
+//     const validator = new Validator();
 //     validator('test').isString();
 //   });
 // });
 
 describe('basic usage', () => {
   it('chained rules', () => {
-    const validator = new v.Validator(OPTIONS_RAW);
+    const validator = new Validator(OPTIONS_RAW);
     validator('test').display('test1').required().isString().notEmpty().notLowercase().isEmail();
     validator('test').display('test2').required().isString().notEmpty().isLowercase();
     validator(null).display('test3').required().isString().notEmpty();
@@ -40,7 +40,7 @@ describe('basic usage', () => {
   });
 
   it('re-usable rules', () => {
-    const validator = new v.Validator(OPTIONS_RAW);
+    const validator = new Validator(OPTIONS_RAW);
     const rule = (item) => {
       item.required().isString();
     };
@@ -52,7 +52,7 @@ describe('basic usage', () => {
   });
 
   it('optional', () => {
-    const validator = new v.Validator(OPTIONS_RAW);
+    const validator = new Validator(OPTIONS_RAW);
 
     let errors = validator(null, (item) => {
       item.isString();
@@ -77,7 +77,7 @@ describe('basic usage', () => {
   });
 
   it('required', () => {
-    const validator = new v.Validator(OPTIONS_RAW);
+    const validator = new Validator(OPTIONS_RAW);
 
     let errors = validator(null, (item) => {
       item.required().isString();
@@ -111,7 +111,7 @@ describe('basic usage', () => {
   });
 
   it('isEqual', () => {
-    const validator = new v.Validator(OPTIONS_RAW);
+    const validator = new Validator(OPTIONS_RAW);
     const rule = (item) => {
       item.isEqual(17);
     };
@@ -128,7 +128,7 @@ describe('basic usage', () => {
   });
 
   it('notEqual', () => {
-    const validator = new v.Validator(OPTIONS_RAW);
+    const validator = new Validator(OPTIONS_RAW);
     const rule = (item) => {
       item.notEqual(17);
     };
