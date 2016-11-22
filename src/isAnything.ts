@@ -8,7 +8,7 @@ import {IsObject} from './isObject';
 import {IsArrayOf} from './isArrayOf';
 
 export class IsAnything extends Base {
-  constructor(path:(string|number)[]) {
+  constructor(path: (string|number)[]) {
     super(path);
   }
 

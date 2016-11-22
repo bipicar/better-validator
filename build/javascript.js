@@ -14,5 +14,5 @@ gulp.task('build:ts', ['clean:js'], function() {
     .pipe(sourcemaps.init())
     .pipe(typescript(options))
     .pipe(sourcemaps.write())
-    .pipe(gulp.dest('dist/js'));
+    .pipe(gulp.dest('dist'));
 });

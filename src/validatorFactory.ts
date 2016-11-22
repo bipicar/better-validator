@@ -11,9 +11,9 @@ const DEFAULT_OPTIONS = {
 };
 
 export class ValidatorFactory {
-  options:any;
-  tests:{validator:Base, value:any}[];
-  static __defaultOptions:any;
+  options: any;
+  tests: {validator: Base, value: any}[];
+  static __defaultOptions: any;
 
   constructor(options) {
     this.options = _.defaults({}, options, ValidatorFactory.defaultOptions, DEFAULT_OPTIONS);
@@ -36,7 +36,7 @@ export class ValidatorFactory {
     // return factory;
   }
 
-  create(value:any):IsAnything {
+  create(value: any): IsAnything {
     const test = {
       validator: new IsAnything(null),
       value
@@ -46,7 +46,7 @@ export class ValidatorFactory {
     return test.validator;
   }
 
-  createAndRun(value:any, rules:(validator:Base) => void):any[] { // TODO type
+  createAndRun(value: any, rules: (validator: Base) => void): any[] { // TODO type
     const test = {
       validator: new IsAnything(null),
       value

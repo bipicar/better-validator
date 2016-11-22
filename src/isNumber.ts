@@ -1,71 +1,71 @@
 import {Base} from './base';
 
 export class IsNumber extends Base {
-  constructor(path:(string|number)[]) {
+  constructor(path: (string|number)[]) {
     super(path);
   }
 
-  integer():this {
+  integer(): this {
     this.satisfies('integer', (value) => !Base.hasValue(value) || /^-?\d+$/.test(String(value)));
     return this;
   }
 
-  isInRange(lower:number, upper:number):this {
+  isInRange(lower: number, upper: number): this {
     this.satisfies('isInRange', (value) => !Base.hasValue(value) || (lower === undefined || value >= lower) && (upper === undefined || value <= upper));
     return this;
   }
 
-  notInRange(lower:number, upper:number):this {
+  notInRange(lower: number, upper: number): this {
     this.satisfies('notInRange', (value) => !Base.hasValue(value) || (lower === undefined || value <= lower) && (upper === undefined || value >= upper));
     return this;
   }
 
-  gt(threshold:number):this {
+  gt(threshold: number): this {
     this.satisfies('gt', (value) => !Base.hasValue(value) || value > threshold);
     return this;
   }
 
-  gte(threshold:number):this {
+  gte(threshold: number): this {
     this.satisfies('gte', (value) => !Base.hasValue(value) || value >= threshold);
     return this;
   }
 
-  lt(threshold:number):this {
+  lt(threshold: number): this {
     this.satisfies('lt', (value) => !Base.hasValue(value) || value < threshold);
     return this;
   }
 
-  lte(threshold:number):this {
+  lte(threshold: number): this {
     this.satisfies('lte', (value) => !Base.hasValue(value) || value <= threshold);
     return this;
   }
 
-  isPositive():this {
+  isPositive(): this {
     this.satisfies('isPositive', (value) => !Base.hasValue(value) || value > 0);
     return this;
   }
 
-  notPositive():this {
+  notPositive(): this {
     this.satisfies('notPositive', (value) => !Base.hasValue(value) || value <= 0);
     return this;
   }
 
-  isNegative():this {
+  isNegative(): this {
     this.satisfies('isNegative', (value) => !Base.hasValue(value) || value < 0);
     return this;
   }
 
-  notNegative():this {
+  notNegative(): this {
     this.satisfies('notNegative', (value) => !Base.hasValue(value) || value >= 0);
     return this;
   }
 
-  isZero():this {
+  isZero(): this {
     this.satisfies('isZero', (value) => !Base.hasValue(value) || value === 0);
     return this;
   }
 
-  notZero():this {
+  notZero(): this {
     this.satisfies('notZero', (value) => !Base.hasValue(value) || value !== 0);
     return this;
   }

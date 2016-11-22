@@ -1,11 +1,15 @@
-const _ = require('underscore');
+/// <reference path="../../../typings/underscore/underscore.d.ts" />
+
+import * as _ from 'underscore';
 
 const DEFAULT_OPTIONS = {
   separator: '.',
   initialSeparator: ''
 };
 
-class PathFormatter {
+export default class PathFormatter {
+  options: any;
+
   /**
    * Create new path formatter
    * @param {object} [options] - options
@@ -21,7 +25,7 @@ class PathFormatter {
    * @param {string[]} path - path parts array
    * @return {string} formatted path
    */
-  format(path) {
+  format(path: (string|number)[]) {
     if (!path || !path.length) return '';
 
     let formatted = '';
@@ -33,22 +37,20 @@ class PathFormatter {
     for (let i = 0; i < path.length; i++) {
       const part = path[i];
 
-      if (_.isNumber(part)) {
+      if (typeof part === 'number') {
         formatted += this.formatIndex(part, i, path.length);
-      } else {
+      } else if (typeof part === 'string') {
         formatted += this.formatProperty(part, i, path.length);
       }
     }
     return formatted;
   }
 
-  formatIndex(index, position, length) {
+  formatIndex(index: number, position: number, length: number) {
     return `[${index}]`;
   }
 
-  formatProperty(property, position, length) {
+  formatProperty(property: string, position: number, length: number) {
     return (position > 0 ? this.options.separator : this.options.initialSeparator) + property;
   }
 }
-
-module.exports = PathFormatter;

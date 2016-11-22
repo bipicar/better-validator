@@ -103,8 +103,14 @@ const errors = validator.run(); // => [{path: ['hint'], value: '32', failed: 'is
 Using with express.js
 
 ```javascript
-const Formatter = require('better-validator/format/response/wrapperFormatter');
-const check = Validator.expressMiddleware({responseFormatter: new Formatter()});
+const WrapperFormatter = require('better-validator/format/response/wrapperFormatter').default;
+const FailureFormatter = require('better-validator/format/failure/failureFormatter').default;
+
+const check = Validator.koaMiddleware({
+  responseFormatter: new WrapperFormatter(),
+  failureFormatter: new FailureFormatter()
+});
+
 const queryRule = (query) => {
   query('email').isEmail();
   query('date').isISO8601();
@@ -122,8 +128,14 @@ app.post('/', [check.query(queryRule), check.body(bodyRule), function(req, res) 
 Using with koa.js
 
 ```javascript
-const Formatter = require('better-validator/format/response/wrapperFormatter');
-const check = Validator.koaMiddleware({responseFormatter: new Formatter()});
+const WrapperFormatter = require('better-validator/format/response/wrapperFormatter').default;
+const FailureFormatter = require('better-validator/format/failure/failureFormatter').default;
+
+const check = Validator.koaMiddleware({
+  responseFormatter: new WrapperFormatter(),
+  failureFormatter: new FailureFormatter()
+});
+
 const queryRule = (query) => {
   query('email').isEmail();
   query('date').isISO8601();

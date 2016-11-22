@@ -4,16 +4,16 @@ import * as _ from 'underscore';
 import {Base} from './base';
 
 export declare type objectValidator = (childValidator) => void;
-export declare type baseConstructor = new (path:(string|number)[]) => Base;
+export declare type baseConstructor = new (path: (string|number)[]) => Base;
 
 export class IsObject extends Base {
-  properties:string[];
-  objectValidator:objectValidator;
-  elementValidator:baseConstructor;
-  elementValidatorName:string;
+  properties: string[];
+  objectValidator: objectValidator;
+  elementValidator: baseConstructor;
+  elementValidatorName: string;
 
-  constructor(path:(string|number)[], objectValidator:objectValidator,
-              elementValidator:baseConstructor, elementValidatorName:string) {
+  constructor(path: (string|number)[], objectValidator: objectValidator,
+              elementValidator: baseConstructor, elementValidatorName: string) {
     super(path);
 
     this.objectValidator = objectValidator;
@@ -26,7 +26,7 @@ export class IsObject extends Base {
     }
   }
 
-  childValidator(property):Base {
+  childValidator(property): Base {
     if (!property) return this;
 
     const path = this.path.slice();
@@ -41,7 +41,7 @@ export class IsObject extends Base {
     return child;
   }
 
-  strict():this {
+  strict(): this {
     this.satisfies('strict', (value) => {
       const properties = Object.keys(value);
       const unexpectedProperties = _.difference(properties, this.properties);

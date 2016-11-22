@@ -4,13 +4,13 @@ import * as _ from "underscore";
 import {Base} from "./base";
 
 export declare type objectValidator = (childValidator) => void;
-export declare type itemValidatorFactory = (path:(string|number)[]) => Base;
+export declare type itemValidatorFactory = (path: (string|number)[]) => Base;
 
 export class IsArrayOf extends Base {
-  itemValidatorFactory:itemValidatorFactory;
-  itemValidatorName:string;
+  itemValidatorFactory: itemValidatorFactory;
+  itemValidatorName: string;
 
-  constructor(path:(string|number)[], itemValidatorFactory:itemValidatorFactory, itemValidatorName:string) {
+  constructor(path: (string|number)[], itemValidatorFactory: itemValidatorFactory, itemValidatorName: string) {
     super(path);
     this.itemValidatorFactory = itemValidatorFactory;
     this.itemValidatorName = itemValidatorName;
@@ -34,12 +34,12 @@ export class IsArrayOf extends Base {
     });
   }
 
-  length(expected:number):this {
+  length(expected: number): this {
     this.satisfies('length', (value) => !Base.hasValue(value) || value.length === expected);
     return this;
   }
 
-  lengthInRange(lower:number, upper:number):this {
+  lengthInRange(lower: number, upper: number): this {
     this.satisfies('lengthInRange', (value) => !Base.hasValue(value) || (lower === undefined || value.length >= lower) && (upper === undefined || value.length <= upper));
     return this;
   }

@@ -22,11 +22,11 @@ class Validator {
 
   static get defaultOptions() {
     return ValidatorFactory.__defaultOptions;
-  };
+  }
 
   static set defaultOptions(value) {
     ValidatorFactory.__defaultOptions = value;
-  };
+  }
 
   static expressMiddleware(options) {
     return new ExpressMiddleware(options);

@@ -1,4 +1,4 @@
 const gulp = require('gulp');
 require('require-dir')('build');
 
-gulp.task('default', ['build:ts']);
+gulp.task('default', ['build:ts', 'copy']);

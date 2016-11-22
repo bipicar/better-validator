@@ -2,7 +2,7 @@ const request = require('supertest');
 const express = require('express');
 const bodyParser = require('body-parser')
 
-const Validator = require('../dist/js/validator');
+const Validator = require('../dist/validator');
 const runTests = require('./runTests');
 
 describe('readme.md', () => {

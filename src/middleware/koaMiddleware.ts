@@ -8,7 +8,7 @@ import {IsObject} from '../isObject';
 import {IsString} from '../isString';
 
 export class KoaMiddleware {
-  options:any;
+  options: any;
 
   constructor(options) {
     this.options = _.defaults({}, options);

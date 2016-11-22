@@ -4,7 +4,7 @@ import * as validator from "validator";
 import {Base} from "./base";
 
 export class IsString extends Base {
-  constructor(path:(string|number)[]) {
+  constructor(path: (string|number)[]) {
     super(path);
 
     for (const key of Object.keys(validator)) {
@@ -25,12 +25,12 @@ export class IsString extends Base {
     }
   }
 
-  isMatch(regex:RegExp):this {
+  isMatch(regex: RegExp): this {
     this.satisfies('isMatch', (value) => !Base.hasValue(value) || regex.test(value));
     return this;
   }
 
-  notMatch(regex:RegExp):this {
+  notMatch(regex: RegExp): this {
     this.satisfies('notMatch', (value) => !Base.hasValue(value) || !regex.test(value));
     return this;
   }
