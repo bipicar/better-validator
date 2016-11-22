@@ -26,7 +26,7 @@
     "test": "node_modules/jasmine/bin/jasmine.js",
     "lint": "node_modules/eslint/bin/eslint.js .",
     "preversion": "[[ \"$(git symbolic-ref --short HEAD)\" != \"master\" ]] && echo \"Must be in master branch\" && exit 1 || npm run lint -s && npm test -s",
-    "postversion": "git push && git push --tags && npm publish"
+    "postversion": "git push && git push --tags && npm publish dist"
   },
   "main": "validator.js",
   "author": "Greg Bacchus",
