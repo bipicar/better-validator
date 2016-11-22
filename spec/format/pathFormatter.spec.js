@@ -1,4 +1,4 @@
-const PathFormatter = require('../../dist/format/path/pathFormatter').default;
+const PathFormatter = require('../../js/format/path/pathFormatter').default;
 
 const formatter = new PathFormatter();
 

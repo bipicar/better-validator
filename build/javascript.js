@@ -10,9 +10,9 @@ gulp.task('build:ts', ['clean:js'], function() {
     declaration: true
   };
 
-  gulp.src('src/**/*.ts', {base: 'src'})
+  gulp.src('ts/**/*.ts', {base: 'ts'})
     .pipe(sourcemaps.init())
     .pipe(typescript(options))
     .pipe(sourcemaps.write())
-    .pipe(gulp.dest('dist'));
+    .pipe(gulp.dest('js'));
 });
