@@ -3,6 +3,7 @@ import {IsAnything} from "./isAnything";
 import {ExpressMiddleware} from "./middleware/expressMiddleware";
 import {KoaMiddleware} from "./middleware/koaMiddleware";
 import {ValidatorFactory} from "./validatorFactory";
+import * as format from './format';
 
 declare type factoryFunction = (value: any, rules?) => IsAnything | Failure[];
 declare type tester = {run?: () => Failure[]}
@@ -34,6 +35,10 @@ class Validator {
 
   static koaMiddleware(options) {
     return new KoaMiddleware(options);
+  }
+
+  static get format() {
+    return format;
   }
 }
 
