@@ -103,7 +103,7 @@ const errors = validator.run(); // => [{path: ['hint'], value: '32', failed: 'is
 Using with express.js
 
 ```javascript
-const Formatter = require('better-validator/format/response/wrapperFormatter');
+const Formatter = require('better-validator/src/format/response/wrapperFormatter');
 const check = Validator.expressMiddleware({responseFormatter: new Formatter()});
 const queryRule = (query) => {
   query('email').isEmail();
@@ -122,7 +122,7 @@ app.post('/', [check.query(queryRule), check.body(bodyRule), function(req, res) 
 Using with koa.js
 
 ```javascript
-const Formatter = require('better-validator/format/response/wrapperFormatter');
+const Formatter = require('better-validator/src/format/response/wrapperFormatter');
 const check = Validator.koaMiddleware({responseFormatter: new Formatter()});
 const queryRule = (query) => {
   query('email').isEmail();
