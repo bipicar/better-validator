@@ -3,6 +3,7 @@
 import * as _ from 'underscore';
 
 export declare type rule = (validator: any) => boolean | Failure[];
+
 export declare type Failure = {
   path: (string|number)[],
   failed: string,
@@ -23,30 +24,30 @@ export class Base {
     return value !== undefined && value !== null;
   }
 
-  display(path: string) {
+  display(path: string): this {
     if (path !== null && path !== undefined) {
       this.path.push(path);
     }
     return this;
   }
 
-  required(): Base {
-    const child = new (<typeof Base>this.constructor)(this.path);
+  required(): this {
+    const child = new (<typeof Base>this.constructor)(this.path) as this;
     this.satisfies('required', (value) => Base.hasValue(value) && child.test(value));
     return child;
   }
 
-  isEqual(expected: any) {
+  isEqual(expected: any): this {
     this.satisfies('isEqual', (value) => value === expected);
     return this;
   }
 
-  notEqual(expected: any) {
+  notEqual(expected: any): this {
     this.satisfies('notEqual', (value) => value !== expected);
     return this;
   }
 
-  satisfies(name: string, rule: rule) {
+  satisfies(name: string, rule: rule): this {
     this.tests.push({name, rule});
     return this;
   }
