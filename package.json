@@ -31,6 +31,8 @@
   "main": "js/index.js",
   "author": "Greg Bacchus",
   "dependencies": {
+    "@types/underscore": "^1.7.34",
+    "@types/validator": "^5.7.35",
     "underscore": "^1.8.3",
     "validator": "^6.0.0"
   },

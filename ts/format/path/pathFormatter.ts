@@ -1,4 +1,4 @@
-/// <reference path="../../../typings/underscore/underscore.d.ts" />
+/// <reference types="underscore" />
 
 import * as _ from 'underscore';
 

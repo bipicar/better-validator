@@ -1,4 +1,4 @@
-/// <reference path="../typings/validator/validator.d.ts" />
+/// <reference types="validator" />
 
 import * as validator from "validator";
 import {Base} from "./base";

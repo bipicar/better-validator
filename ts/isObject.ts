@@ -1,4 +1,4 @@
-/// <reference path="../typings/underscore/underscore.d.ts" />
+/// <reference types="underscore" />
 
 import * as _ from 'underscore';
 import {Base} from './base';
@@ -44,7 +44,7 @@ export class IsObject extends Base {
   strict(): this {
     this.satisfies('strict', (value) => {
       const properties = Object.keys(value);
-      const unexpectedProperties = _.difference(properties, this.properties);
+      const unexpectedProperties: Array<string> = _.difference(properties, this.properties);
       return _.map(unexpectedProperties, (property) => {
         const path = this.path.slice();
         path.push(property);

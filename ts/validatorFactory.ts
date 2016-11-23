@@ -1,4 +1,4 @@
-/// <reference path="../typings/underscore/underscore.d.ts" />
+/// <reference types="underscore" />
 
 import * as _ from "underscore";
 import {Base} from "./base";
@@ -57,7 +57,7 @@ export class ValidatorFactory {
   }
 
   run() {
-    const failures = _.flatten(_.map(this.tests, (test) => test.validator.test(test.value)));
+    const failures = _.flatten(_.map(this.tests, (test) => test.validator.test(test.value)) as Array<any>);
 
     const formatter = this.options.failureFormatter;
     if (!formatter) {

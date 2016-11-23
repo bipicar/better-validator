@@ -7,7 +7,8 @@ gulp.task('build:ts', ['clean:js'], function() {
     target: 'es6',
     module: 'commonjs',
     moduleResolution: 'node',
-    declaration: true
+    declaration: true,
+    strictNullChecks: true
   };
 
   gulp.src('ts/**/*.ts', {base: 'ts'})

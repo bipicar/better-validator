@@ -1,4 +1,4 @@
-/// <reference path="../typings/underscore/underscore.d.ts" />
+/// <reference types="underscore" />
 
 import * as _ from 'underscore';
 
@@ -14,7 +14,7 @@ export class Base {
   path: (string|number)[];
   tests: {name: string, rule: rule}[];
 
-  constructor(path: string | (string|number)[]) {
+  constructor(path: string | (string|number)[] | null) {
     this.path = !path ? [] : typeof path !== 'string' ? path : [path];
     this.tests = [];
   }
@@ -56,7 +56,7 @@ export class Base {
   }
 
   test(value: any): Failure[] {
-    const failures = [];
+    const failures: Array<Failure> = [];
     for (const test of this.tests) {
       const results = test.rule(value);
 
