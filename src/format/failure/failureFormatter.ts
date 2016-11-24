@@ -3,14 +3,14 @@
 import * as _ from 'underscore';
 
 import {Helpers} from '../../helpers';
-import PathFormatter from '../path/PathFormatter';
+import {PathFormatter} from '../path';
 
 const DEFAULT_OPTIONS = {
   pathElement: 'parameter',
   pathFormatter: new PathFormatter(null)
 };
 
-export default class FailureFormatter {
+export class FailureFormatter {
   options: any;
 
   /**

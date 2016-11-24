@@ -1,4 +1,4 @@
-const Validator = require('../js');
+const Validator = require('../src');
 
 const OPTIONS_RAW = {};
 

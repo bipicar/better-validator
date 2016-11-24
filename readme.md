@@ -13,6 +13,7 @@ The aim of this validator is to
 * support i18n
 * use the well known [validator](https://www.npmjs.com/package/validator) library for string validation
 * be easily used with both express.js and koa.js
+* work with typescript (>= v2.0.0)
 
 ## Basic usage
 ```javascript
@@ -103,8 +104,8 @@ const errors = validator.run(); // => [{path: ['hint'], value: '32', failed: 'is
 Using with express.js
 
 ```javascript
-const WrapperFormatter = require('better-validator/format/response/wrapperFormatter').default;
-const FailureFormatter = require('better-validator/format/failure/failureFormatter').default;
+const WrapperFormatter = Validator.format.response.WrapperFormatter;
+const FailureFormatter = Validator.format.failure.FailureFormatter;
 
 const check = Validator.koaMiddleware({
   responseFormatter: new WrapperFormatter(),
@@ -128,8 +129,8 @@ app.post('/', [check.query(queryRule), check.body(bodyRule), function(req, res) 
 Using with koa.js
 
 ```javascript
-const WrapperFormatter = require('better-validator/format/response/wrapperFormatter').default;
-const FailureFormatter = require('better-validator/format/failure/failureFormatter').default;
+const WrapperFormatter = Validator.format.response.WrapperFormatter;
+const FailureFormatter = Validator.format.failure.FailureFormatter;
 
 const check = Validator.koaMiddleware({
   responseFormatter: new WrapperFormatter(),

@@ -9,4 +9,7 @@
 /certs
 *.log
 .npmrc
-/js
+*.js
+*.d.ts
+*.map
+!/spec

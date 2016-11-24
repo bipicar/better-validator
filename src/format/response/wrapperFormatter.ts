@@ -9,7 +9,7 @@ const DEFAULT_OPTIONS = {
   }
 };
 
-export default class WrapperFormatter {
+export class WrapperFormatter {
   options: any;
 
   /**

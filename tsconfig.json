@@ -3,12 +3,10 @@
     "target": "es6",
     "module": "commonjs",
     "moduleResolution": "node",
+    "sourceMap": true,
     "declaration": true,
     "strictNullChecks": true
   },
-  "files": [
-    "ts/**/*.ts"
-  ],
   "exclude": [
     "node_modules"
   ]

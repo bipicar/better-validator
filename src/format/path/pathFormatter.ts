@@ -7,7 +7,7 @@ const DEFAULT_OPTIONS = {
   initialSeparator: ''
 };
 
-export default class PathFormatter {
+export class PathFormatter {
   options: any;
 
   /**
