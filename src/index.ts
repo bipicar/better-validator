@@ -22,14 +22,6 @@ class Validator {
     return fn;
   }
 
-  static get defaultOptions() {
-    return ValidatorFactory.defaultOptions;
-  }
-
-  static set defaultOptions(value) {
-    ValidatorFactory.defaultOptions = value;
-  }
-
   static expressMiddleware(options) {
     return new ExpressMiddleware(options);
   }
