@@ -16,7 +16,10 @@
     "request-validator",
     "koa",
     "koajs",
-    "koa.js"
+    "koa.js",
+    "typescript",
+    "node",
+    "node.js"
   ],
   "repository": {
     "type": "git",
