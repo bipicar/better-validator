@@ -10,12 +10,12 @@ export class IsNumber extends Base {
     return this;
   }
 
-  isInRange(lower: number, upper: number): this {
+  isInRange(lower: number | undefined, upper?: number | undefined): this {
     this.satisfies('isInRange', (value) => !Base.hasValue(value) || (lower === undefined || value >= lower) && (upper === undefined || value <= upper));
     return this;
   }
 
-  notInRange(lower: number, upper: number): this {
+  notInRange(lower: number | undefined, upper?: number | undefined): this {
     this.satisfies('notInRange', (value) => !Base.hasValue(value) || (lower === undefined || value <= lower) && (upper === undefined || value >= upper));
     return this;
   }

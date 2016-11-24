@@ -50,6 +50,8 @@ class Validator {
   static get format() {
     return format;
   }
+
+  static default = Validator;
 }
 
 export = Validator;

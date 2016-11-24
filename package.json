@@ -29,6 +29,7 @@
     "postversion": "git push && git push --tags && npm publish"
   },
   "main": "js/index.js",
+  "typings": "js/index",
   "author": "Greg Bacchus",
   "dependencies": {
     "@types/underscore": "^1.7.34",
