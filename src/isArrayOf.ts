@@ -1,7 +1,7 @@
 /// <reference types="underscore" />
 
 import * as _ from "underscore";
-import {Base} from "./base";
+import {Base, Failure} from "./base";
 
 export declare type objectValidator = (childValidator) => void;
 export declare type itemValidatorFactory = (path: (string|number)[]) => Base;
@@ -22,15 +22,17 @@ export class IsArrayOf extends Base {
     this.satisfies('isArray', (value) => {
       if (!_.isArray(value)) return false;
 
-      let passed = true;
+      let failures: Failure[] = [];
       for (let i = 0; i < value.length; i++) {
         const item = value[i];
         const path = this.path.slice();
         path.push(i);
         const child = this.itemValidatorFactory(path);
-        passed = passed && (!Base.hasValue(item) || child.test(item));
+        if (Base.hasValue(item)) {
+          failures = failures.concat(child.test(item));
+        }
       }
-      return passed;
+      return failures;
     });
   }
 
