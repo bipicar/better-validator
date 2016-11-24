@@ -3,7 +3,6 @@
 import * as _ from "underscore";
 import {Base, Failure} from "./base";
 
-export declare type objectValidator = (childValidator) => void;
 export declare type itemValidatorFactory = (path: (string|number)[]) => Base;
 
 export class IsArrayOf extends Base {
