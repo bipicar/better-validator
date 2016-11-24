@@ -13,6 +13,7 @@ The aim of this validator is to
 * support i18n
 * use the well known [validator](https://www.npmjs.com/package/validator) library for string validation
 * be easily used with both express.js and koa.js
+* work with typescript (>= v2.0.0)
 
 ## Basic usage
 ```javascript
@@ -103,8 +104,14 @@ const errors = validator.run(); // => [{path: ['hint'], value: '32', failed: 'is
 Using with express.js
 
 ```javascript
-const Formatter = require('better-validator/src/format/response/wrapperFormatter');
-const check = Validator.expressMiddleware({responseFormatter: new Formatter()});
+const WrapperFormatter = Validator.format.response.WrapperFormatter;
+const FailureFormatter = Validator.format.failure.FailureFormatter;
+
+const check = Validator.koaMiddleware({
+  responseFormatter: new WrapperFormatter(),
+  failureFormatter: new FailureFormatter()
+});
+
 const queryRule = (query) => {
   query('email').isEmail();
   query('date').isISO8601();
@@ -122,8 +129,14 @@ app.post('/', [check.query(queryRule), check.body(bodyRule), function(req, res) 
 Using with koa.js
 
 ```javascript
-const Formatter = require('better-validator/src/format/response/wrapperFormatter');
-const check = Validator.koaMiddleware({responseFormatter: new Formatter()});
+const WrapperFormatter = Validator.format.response.WrapperFormatter;
+const FailureFormatter = Validator.format.failure.FailureFormatter;
+
+const check = Validator.koaMiddleware({
+  responseFormatter: new WrapperFormatter(),
+  failureFormatter: new FailureFormatter()
+});
+
 const queryRule = (query) => {
   query('email').isEmail();
   query('date').isISO8601();

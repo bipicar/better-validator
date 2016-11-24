@@ -1,4 +1,5 @@
-const PathFormatter = require('../../src/format/path/pathFormatter');
+const Validator = require('../../src');
+const PathFormatter = Validator.format.path.PathFormatter;
 
 const formatter = new PathFormatter();
 

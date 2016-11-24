@@ -1,5 +1,3 @@
-/mongod
-/.c9revisions
 /.idea
 *.suo
 /data
@@ -9,7 +7,5 @@
 /certs
 *.log
 .npmrc
-*.js
-*.d.ts
-*.map
-!/spec
+*.ts
+!*.d.ts

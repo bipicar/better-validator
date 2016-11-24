@@ -1,6 +1,6 @@
 {
   "name": "better-validator",
-  "version": "1.0.9",
+  "version": "2.0.0",
   "description": "Second generation object or request validator for node.js",
   "homepage": "https://bitbucket.org/gregbacchus/better-validator/overview",
   "keywords": [
@@ -25,22 +25,29 @@
   "scripts": {
     "test": "node_modules/jasmine/bin/jasmine.js",
     "lint": "node_modules/eslint/bin/eslint.js .",
-    "preversion": "[[ \"$(git symbolic-ref --short HEAD)\" != \"master\" ]] && echo \"Must be in master branch\" && exit 1 || npm run lint -s && npm test -s",
-    "postversion": "git push && git push --tags && npm publish"
+    "preversion": "[[ \"$(git symbolic-ref --short HEAD)\" != \"master\" ]] && echo \"Must be in master branch\" && exit 1 || gulp && npm run lint -s && npm test -s",
+    "postversion": "git push && git push --tags && npm publish",
+    "pretublish": "tsc"
   },
+  "main": "src/index.js",
+  "types": "src/index.d.ts",
   "author": "Greg Bacchus",
   "dependencies": {
+    "@types/underscore": "^1.7.34",
+    "@types/validator": "^5.7.35",
     "underscore": "^1.8.3",
     "validator": "^6.0.0"
   },
-  "main": "src/validator.js",
   "devDependencies": {
     "body-parser": "^1.15.2",
+    "del": "^2.2.2",
     "eslint": "^3.9.1",
     "express": "^4.14.0",
     "istanbul": "^0.4.5",
     "jasmine": "^2.5.2",
     "koa": "^1.2.4",
-    "supertest": "^2.0.1"
+    "supertest": "^2.0.1",
+    "tslint": "^4.0.2",
+    "typescript": "^2.1.1"
   }
 }

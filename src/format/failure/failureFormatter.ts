@@ -1,14 +1,18 @@
-const _ = require('underscore');
+/// <reference types="underscore" />
 
-const helpers = require('../../helpers');
-const PathFormatter = require('../path/pathFormatter');
+import * as _ from 'underscore';
+
+import {Helpers} from '../../helpers';
+import {PathFormatter} from '../path';
 
 const DEFAULT_OPTIONS = {
   pathElement: 'parameter',
-  pathFormatter: new PathFormatter()
+  pathFormatter: new PathFormatter(null)
 };
 
-class FailureFormatter {
+export class FailureFormatter {
+  options: any;
+
   /**
    * Create new error formatter
    * @param {object} [options] - options
@@ -26,11 +30,9 @@ class FailureFormatter {
    */
   format(failure) {
     return {
-      [this.options.pathElement]: helpers.format(this.options.pathFormatter, failure.path),
+      [this.options.pathElement]: Helpers.format(this.options.pathFormatter, failure.path),
       value: failure.value,
       failed: failure.failed
     };
   }
 }
-
-module.exports = FailureFormatter;

@@ -1,4 +1,6 @@
-const _ = require('underscore');
+/// <reference types="underscore" />
+
+import * as _ from 'underscore';
 
 const DEFAULT_OPTIONS = {
   wrapperElement: 'failures',
@@ -7,7 +9,9 @@ const DEFAULT_OPTIONS = {
   }
 };
 
-class WrapperFormatter {
+export class WrapperFormatter {
+  options: any;
+
   /**
    * Create wrapper formatter
    * @param {object} [options] - options
@@ -29,5 +33,3 @@ class WrapperFormatter {
     });
   }
 }
-
-module.exports = WrapperFormatter;
