@@ -13,7 +13,7 @@ const DEFAULT_OPTIONS = {
 export class ValidatorFactory {
   options: any;
   tests: {validator: Base, value: any}[];
-  static __defaultOptions: any;
+  static defaultOptions: any;
 
   constructor(options) {
     this.options = _.defaults({}, options, ValidatorFactory.defaultOptions, DEFAULT_OPTIONS);
@@ -67,13 +67,5 @@ export class ValidatorFactory {
     return _.map(failures, (failure) => {
       return Helpers.format(formatter, failure);
     });
-  }
-
-  static get defaultOptions() {
-    return ValidatorFactory.__defaultOptions;
-  }
-
-  static set defaultOptions(value) {
-    ValidatorFactory.__defaultOptions = value;
   }
 }

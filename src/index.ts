@@ -23,11 +23,11 @@ class Validator {
   }
 
   static get defaultOptions() {
-    return ValidatorFactory.__defaultOptions;
+    return ValidatorFactory.defaultOptions;
   }
 
   static set defaultOptions(value) {
-    ValidatorFactory.__defaultOptions = value;
+    ValidatorFactory.defaultOptions = value;
   }
 
   static expressMiddleware(options) {
