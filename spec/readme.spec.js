@@ -51,18 +51,48 @@ describe('readme.md', () => {
       expect(errors).toContain(jasmine.objectContaining({path: ['hint'], value: 32, failed: 'isString'}));
     });
 
-    it('Validate children of an array', () => {
+    it('Validate children of an object array', () => {
       const validator = new Validator();
 
       const array = [{count: 5, hint: 32}];
 
-      validator(array).required().isArrayOf((child) => {
+      validator(array).required().isObjectArray((child) => {
         child('count').required().isNumber().integer(); // pass
         child('hint').isString(); // fail
       });
       const errors = validator.run(); // => [{path: [0, 'hint'], value: 32, test: 'isString'}]
       expect(errors.length).toBe(1);
       expect(errors).toContain(jasmine.objectContaining({path: [0, 'hint'], value: 32, failed: 'isString'}));
+    });
+
+    it('Validate children of an array', () => {
+      const validator = new Validator();
+
+      const array = [{count: 5, hint: 32}];
+
+      validator(array).required().isArray((item) => {
+        item.isObject((child) => {
+          child('count').required().isNumber().integer(); // pass
+          child('hint').isString(); // fail
+        });
+      });
+      const errors = validator.run(); // => [{path: [0, 'hint'], value: 32, test: 'isString'}]
+      expect(errors.length).toBe(1);
+      expect(errors).toContain(jasmine.objectContaining({path: [0, 'hint'], value: 32, failed: 'isString'}));
+    });
+
+    it('Validate number children of an array', () => {
+      const validator = new Validator();
+
+      const array = [1, 2, 3.2, 'test'];
+
+      validator(array).required().isArray((item) => {
+        item.isNumber().required().integer();
+      });
+      const errors = validator.run(); // => [{path: [2], value: 3.2, test: 'integer'}, {path: [3], value: 'test, test: 'isNumber'}]
+      expect(errors.length).toBe(2);
+      expect(errors).toContain(jasmine.objectContaining({path: [2], value: 3.2, failed: 'integer'}));
+      expect(errors).toContain(jasmine.objectContaining({path: [3], value: 'test', failed: 'isNumber'}));
     });
 
     it('Re-usable validation parts 1', () => {

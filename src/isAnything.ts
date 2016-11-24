@@ -4,7 +4,7 @@ import * as _ from 'underscore';
 import {Base} from './base';
 import {IsNumber} from './isNumber';
 import {IsString} from './isString';
-import {IsObject} from './isObject';
+import {IsObject, objectValidator} from './isObject';
 import {IsArrayOf} from './isArrayOf';
 
 export class IsAnything extends Base {
@@ -24,18 +24,29 @@ export class IsAnything extends Base {
     return child;
   }
 
-  isObject(objectValidator) {
+  isObject(objectValidator: objectValidator) {
     const child = new IsObject(this.path, objectValidator, IsAnything, 'isAnything');
     this.satisfies('isObject', (value) => (!Base.hasValue(value) || _.isObject(value)) && child.test(value));
     return child;
   }
 
-  isArrayOf(childValidator) {
+  isObjectArray(childValidator: objectValidator) {
     const factory = (path) => {
       return new IsObject(path, childValidator, IsAnything, 'isAnything');
     };
     const child = new IsArrayOf(this.path, factory, 'isObject');
-    this.satisfies('isArrayOf', (value) => (!Base.hasValue(value) || _.isArray(value)) && child.test(value));
+    this.satisfies('isObjectArray', (value) => (!Base.hasValue(value) || _.isArray(value)) && child.test(value));
+    return child;
+  }
+
+  isArray(childValidator: objectValidator) {
+    const factory = (path) => {
+      const itemValidator = new IsAnything(path);
+      childValidator(itemValidator);
+      return itemValidator;
+    };
+    const child = new IsArrayOf(this.path, factory, 'isObject');
+    this.satisfies('isArray', (value) => (!Base.hasValue(value) || _.isArray(value)) && child.test(value));
     return child;
   }
 }

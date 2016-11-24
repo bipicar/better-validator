@@ -13,9 +13,10 @@ The aim of this validator is to
 * support i18n
 * use the well known [validator](https://www.npmjs.com/package/validator) library for string validation
 * be easily used with both express.js and koa.js
-* work with typescript (>= v2.0.0)
+* written in and works with typescript (>= v2.0.0, see Section on Breaking Changes below)
 
 ## Basic usage
+
 ```javascript
 const Validator = require('better-validator');
 ```
@@ -68,11 +69,22 @@ const validator = new Validator();
 
 const array = [{count: 5, hint: 32}];
 
-validator(array).required().isArrayOf((child) => {
+validator(array).required().isObjectArray((child) => {
   child('count').required().isNumber().integer(); // pass
   child('hint').isString(); // fail
 });
 const errors = validator.run(); // => [{path: [0, 'hint'], value: 32, failed: 'isString'}]
+```
+
+```javascript
+const validator = new Validator();
+
+const array = [1, 2, 3.2, 'test'];
+
+validator(array).required().isArray((item) => {
+    item.isNumber().required().integer();
+});
+const errors = validator.run(); // => [{path: [2], value: 3.2, test: 'integer'}, {path: [3], value: 'test, test: 'isNumber'}]
 ```
 
 Re-usable validation parts:
@@ -166,9 +178,14 @@ If the body content does not pass the given validation check, the validator will
 }
 ```
 
+## Breaking Changes Since v1.x
+
+- `isArrayOf` changed to `isObjectArray`
+- access to formatters changed to `Validator.format.response.WrapperFormatter` and similar
+
 ## Installation
 
-    $ npm install better-validator
+    $ npm install -S better-validator
 
 ## Included Validators
 
@@ -315,12 +332,12 @@ validator(value).isNumber().integer();
 * `isNegative()`, `notNegative()`
 * `isZero()`, `notZero()`
 
-### isArrayOf
+### isObjectArray
 
 Makes sure that the item is of type array, and validates the items. Also can specify minimum and maximum length of the array.
 
 ```javascript
-validator(value).isArrayOf((item) => {
+validator(value).isObjectArray((item) => {
   item('foo').isString();
   item('bar').isString().required();
   item().strict();
@@ -328,21 +345,32 @@ validator(value).isArrayOf((item) => {
 ```
 
 ```javascript
-validator(value).isArrayOf((item) => {
+validator(value).isObjectArray((item) => {
   // ...
 }).lengthInRange(4, 8); // 4 to 8 inclusive
 ```
 
 ```javascript
-validator(value).isArrayOf((item) => {
+validator(value).isObjectArray((item) => {
   // ...
 }).lengthInRange(undefined, 8); // less than or equal to 8
 ```
 
 ```javascript
-validator(value).isArrayOf((item) => {
+validator(value).isObjectArray((item) => {
   // ...
 }).lengthInRange(1); // one or more
+```
+
+## isArray
+
+```javascript
+const array = [1, 2, 3.2, 'test'];
+
+validator(array).required().isArray((item) => {
+    item.isNumber().required().integer();
+});
+const errors = validator.run(); // => [{path: [2], value: 3.2, test: 'integer'}, {path: [3], value: 'test, test: 'isNumber'}]
 ```
 
 ## Your Own Validators
