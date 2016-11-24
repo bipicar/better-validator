@@ -25,7 +25,7 @@
   "scripts": {
     "test": "node_modules/jasmine/bin/jasmine.js",
     "lint": "node_modules/eslint/bin/eslint.js .",
-    "preversion": "[[ \"$(git symbolic-ref --short HEAD)\" != \"master\" ]] && echo \"Must be in master branch\" && exit 1 || gulp && npm run lint -s && npm test -s",
+    "preversion": "[[ \"$(git symbolic-ref --short HEAD)\" != \"master\" ]] && echo \"Must be in master branch\" && exit 1 || tsc && npm run lint -s && npm test -s",
     "postversion": "git push && git push --tags && npm publish",
     "pretublish": "tsc"
   },
