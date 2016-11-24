@@ -84,7 +84,7 @@ const array = [1, 2, 3.2, 'test'];
 validator(array).required().isArray((item) => {
     item.isNumber().required().integer();
 });
-const errors = validator.run(); // => [{path: [2], value: 3.2, test: 'integer'}, {path: [3], value: 'test, test: 'isNumber'}]
+const errors = validator.run(); // => [{path: [2], value: 3.2, test: 'integer'}, {path: [3], value: 'test', test: 'isNumber'}]
 ```
 
 Re-usable validation parts:
@@ -370,7 +370,7 @@ const array = [1, 2, 3.2, 'test'];
 validator(array).required().isArray((item) => {
     item.isNumber().required().integer();
 });
-const errors = validator.run(); // => [{path: [2], value: 3.2, test: 'integer'}, {path: [3], value: 'test, test: 'isNumber'}]
+const errors = validator.run(); // => [{path: [2], value: 3.2, test: 'integer'}, {path: [3], value: 'test', test: 'isNumber'}]
 ```
 
 ## Your Own Validators
