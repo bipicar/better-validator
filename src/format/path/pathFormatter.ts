@@ -3,8 +3,8 @@
 import * as _ from 'underscore';
 
 const DEFAULT_OPTIONS = {
-  separator: '.',
-  initialSeparator: ''
+  initialSeparator: '',
+  separator: '.'
 };
 
 export class PathFormatter {

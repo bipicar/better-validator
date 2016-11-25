@@ -3,9 +3,9 @@
 import * as _ from 'underscore';
 import {Base} from '../base';
 import {Helpers} from '../helpers';
-import {ValidatorFactory} from '../validatorFactory';
 import {IsObject} from '../isObject';
 import {IsString} from '../isString';
+import {ValidatorFactory} from '../validatorFactory';
 
 export class KoaMiddleware {
   options: any;
@@ -22,7 +22,7 @@ export class KoaMiddleware {
       const objectValidator = new IsObject(anythingValidator.path, rule, IsString, 'isString');
       anythingValidator.satisfies('isObjectOfString', (value) => (!Base.hasValue(value) || _.isObject(value)) && objectValidator.test(value));
       yield self.checkErrors(validator, this, next);
-    }
+    };
   }
 
   body(rule) {
@@ -31,7 +31,7 @@ export class KoaMiddleware {
       const validator = new ValidatorFactory(self.options);
       validator.create(this.request.body).isObject(rule);
       yield self.checkErrors(validator, this, next);
-    }
+    };
   }
 
   *checkErrors(validator, ctx, next) {

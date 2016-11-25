@@ -31,8 +31,8 @@ export class FailureFormatter {
   format(failure) {
     return {
       [this.options.pathElement]: Helpers.format(this.options.pathFormatter, failure.path),
-      value: failure.value,
-      failed: failure.failed
+      failed: failure.failed,
+      value: failure.value
     };
   }
 }

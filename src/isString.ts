@@ -1,7 +1,7 @@
 /// <reference types="validator" />
 
-import * as validator from "validator";
-import {Base} from "./base";
+import * as validator from 'validator';
+import {Base} from './base';
 
 export class IsString extends Base {
   constructor(path: (string|number)[]) {

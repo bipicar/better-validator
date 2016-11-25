@@ -3,9 +3,9 @@
 import * as _ from 'underscore';
 import {Base} from '../base';
 import {Helpers} from '../helpers';
-import {ValidatorFactory} from '../validatorFactory';
 import {IsObject} from '../isObject';
 import {IsString} from '../isString';
+import {ValidatorFactory} from '../validatorFactory';
 
 export class ExpressMiddleware {
   options: any;
@@ -21,7 +21,7 @@ export class ExpressMiddleware {
       const objectValidator = new IsObject(anythingValidator.path, rule, IsString, 'isString');
       anythingValidator.satisfies('isObjectOfString', (value) => (!Base.hasValue(value) || _.isObject(value)) && objectValidator.test(value));
       this.checkErrors(validator, res, next);
-    }
+    };
   }
 
   body(rule) {
@@ -29,7 +29,7 @@ export class ExpressMiddleware {
       const validator = new ValidatorFactory(this.options);
       validator.create(req.body).isObject(rule);
       this.checkErrors(validator, res, next);
-    }
+    };
   }
 
   checkErrors(validator, res, next) {

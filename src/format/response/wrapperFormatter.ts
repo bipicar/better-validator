@@ -3,10 +3,10 @@
 import * as _ from 'underscore';
 
 const DEFAULT_OPTIONS = {
-  wrapperElement: 'failures',
   staticTemplate: {
     type: 'ValidationError'
-  }
+  },
+  wrapperElement: 'failures'
 };
 
 export class WrapperFormatter {

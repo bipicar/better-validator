@@ -5,8 +5,8 @@ import * as _ from 'underscore';
 export declare type rule = (validator: any) => boolean | Failure[];
 
 export declare type Failure = {
-  path: (string|number)[],
   failed: string,
+  path: (string|number)[],
   rule?: rule,
   value: any
 };
@@ -70,8 +70,8 @@ export class Base {
 
         // failed
         failures.push({
-          path: this.path,
           failed: test.name,
+          path: this.path,
           rule: test.rule,
           value
         });

@@ -2,10 +2,10 @@
 
 import * as _ from 'underscore';
 import {Base} from './base';
-import {IsNumber} from './isNumber';
-import {IsString} from './isString';
-import {IsObject, objectValidator} from './isObject';
 import {IsArrayOf} from './isArrayOf';
+import {IsNumber} from './isNumber';
+import {IsObject, objectValidator} from './isObject';
+import {IsString} from './isString';
 
 export class IsAnything extends Base {
   constructor(path: (string|number)[] | null) {

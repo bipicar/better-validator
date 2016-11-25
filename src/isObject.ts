@@ -54,7 +54,7 @@ export class IsObject extends Base {
           failed: 'strict',
           value: value[property]
         };
-      })
+      });
     });
     return this;
   }

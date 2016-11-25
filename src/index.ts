@@ -1,13 +1,13 @@
-import {Failure} from "./base";
-import {IsAnything} from "./isAnything";
-import {ExpressMiddleware} from "./middleware/expressMiddleware";
-import {KoaMiddleware} from "./middleware/koaMiddleware";
-import {ValidatorFactory} from "./validatorFactory";
+import {Failure} from './base';
 import * as format from './format';
+import {IsAnything} from './isAnything';
+import {ExpressMiddleware} from './middleware/expressMiddleware';
+import {KoaMiddleware} from './middleware/koaMiddleware';
+import {ValidatorFactory} from './validatorFactory';
 
 declare type factoryRunFunction = (value: any, rules) => IsAnything | Failure[];
 declare type factoryFunction = (value: any) => IsAnything;
-declare type tester = {run?: () => Failure[]}
+declare type tester = {run?: () => Failure[]};
 
 class Validator {
   constructor(options) {
