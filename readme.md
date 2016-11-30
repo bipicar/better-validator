@@ -17,9 +17,21 @@ The aim of this validator is to
 
 ## Basic usage
 
+Javascript
+
 ```javascript
 const Validator = require('better-validator');
+const validator = new Validator(options);
 ```
+
+Typescript
+
+```typescript
+import Validator from 'better-validator';
+const validator = Validator.create(options); // can also use new Validator(), but this has better type support due to trying to keep as much backwards compatibility as possible with v1.x
+```
+
+Simple validation
 
 ```javascript
 const validator = new Validator();
@@ -133,9 +145,9 @@ const bodyRule = (body) => {
   body('hint').isString();
   body().strict(); // make sure there aren't any expected properties in the body
 };
-app.post('/', [check.query(queryRule), check.body(bodyRule), function(req, res) {
+app.post('/', check.query(queryRule), check.body(bodyRule), function(req, res) {
   // ...
-}
+});
 ```
 
 Using with koa.js
