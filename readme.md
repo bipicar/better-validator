@@ -12,7 +12,7 @@ The aim of this validator is to
 * be able to customise failure messages
 * support i18n
 * use the well known [validator](https://www.npmjs.com/package/validator) library for string validation
-* be easily used with both express.js and koa.js
+* be easily used with both express.js, koa.js and koa@next
 * written in and works with typescript (>= v2.0.0, see Section on Breaking Changes below)
 
 ## Basic usage
@@ -159,6 +159,29 @@ const bodyRule = (body) => {
   body().strict(); // make sure there aren't any expected properties in the body
 };
 route.post('/', check.query(queryRule), check.body(bodyRule), otherFunction);
+```
+
+Using with koa@next (and koa-router@7) and typescript
+
+```javascript
+import Validator from 'better-validator';
+
+const WrapperFormatter = Validator.format.response.WrapperFormatter;
+const FailureFormatter = Validator.format.failure.FailureFormatter;
+
+const check = Validator.koa2Middleware({
+  responseFormatter: new WrapperFormatter(),
+  failureFormatter: new FailureFormatter()
+});
+
+const queryRule = (query) => {
+  query('email').isEmail();
+  query('date').isISO8601();
+};
+const paramsRule = (params) => {
+  params('id').required();
+};
+route.get('/:id/', check.query(queryRule), check.params(paramsRule), otherFunction);
 ```
 
 If the body content does not pass the given validation check, the validator will return.

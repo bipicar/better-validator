@@ -7,7 +7,7 @@ import {IsObject} from '../isObject';
 import {IsString} from '../isString';
 import {ValidatorFactory} from '../validatorFactory';
 
-export class KoaMiddleware {
+export class Koa2Middleware {
   options: any;
 
   constructor(options) {
@@ -15,40 +15,37 @@ export class KoaMiddleware {
   }
 
   query(rule) {
-    const self = this;
-    return function *(next) {
-      const validator = new ValidatorFactory(self.options);
-      const anythingValidator = validator.create(this.query).display('?');
+    return async (ctx, next) => {
+      const validator = new ValidatorFactory(this.options);
+      const anythingValidator = validator.create(ctx.query).display('?');
       const objectValidator = new IsObject(anythingValidator.path, rule, IsString, 'isString');
       anythingValidator.satisfies('isObjectOfString', (value) => (!Base.hasValue(value) || _.isObject(value)) && objectValidator.test(value));
-      yield self.checkErrors(validator, this, next);
+      await this.checkErrors(validator, ctx, next);
     };
   }
 
   body(rule) {
-    const self = this;
-    return function *(next) {
-      const validator = new ValidatorFactory(self.options);
-      validator.create(this.request.body).isObject(rule);
-      yield self.checkErrors(validator, this, next);
+    return async (ctx, next) => {
+      const validator = new ValidatorFactory(this.options);
+      validator.create(ctx.request.body).isObject(rule);
+      await this.checkErrors(validator, ctx, next);
     };
   }
 
   params(rule) {
-    const self = this;
-    return function *(next) {
-      const validator = new ValidatorFactory(self.options);
-      const anythingValidator = validator.create(this.params).display('@');
+    return async (ctx, next) => {
+      const validator = new ValidatorFactory(this.options);
+      const anythingValidator = validator.create(ctx.params).display('@');
       const objectValidator = new IsObject(anythingValidator.path, rule, IsString, 'isString');
       anythingValidator.satisfies('isObjectOfString', (value) => (!Base.hasValue(value) || _.isObject(value)) && objectValidator.test(value));
-      yield self.checkErrors(validator, this, next);
+      await this.checkErrors(validator, ctx, next);
     };
   }
 
-  *checkErrors(validator, ctx, next) {
+  async checkErrors(validator, ctx, next) {
     const failures = validator.run();
     if (!failures || !failures.length) {
-      yield next;
+      await next();
       return;
     }
 

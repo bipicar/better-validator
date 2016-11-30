@@ -29,8 +29,9 @@ export class PathFormatter {
     if (!path || !path.length) return '';
 
     let formatted = '';
-    if (path[0] === '?') {
-      formatted = '?';
+    const first = String(path[0]);
+    if (/^[\/?:!#$%\^&*@]$/.test(first)) {
+      formatted = first;
       path = path.slice(1);
     }
 
