@@ -50,6 +50,8 @@ export class Koa2Middleware {
     }
 
     ctx.status = 400;
-    ctx.body = Helpers.format(this.options.responseFormatter, failures);
+    ctx.body = Helpers.format(this.options.responseFormatter,
+      _.map(failures, (failure) => Helpers.format(this.options.translationFormatter, failure, ctx))
+    );
   }
 }

@@ -408,13 +408,76 @@ validator(array).required().isArray((item) => {
 const errors = validator.run(); // => [{path: [2], value: 3.2, test: 'integer'}, {path: [3], value: 'test', test: 'isNumber'}]
 ```
 
-## Your Own Validators
-TODO
-
-## Formatting Result / Errors
-TODO
-
 ## i18n
+
+#### express.js
+
+```
+npm install -S i18n
+```
+
+Set up `i18n` as per normal
+
+```javascript
+const WrapperFormatter = Validator.format.response.WrapperFormatter;
+const FailureFormatter = Validator.format.failure.FailureFormatter;
+const I18nExpressFormatter = Validator.format.message.I18nExpressFormatter;
+
+const check = Validator.koaMiddleware({
+  responseFormatter: new WrapperFormatter(),
+  failureFormatter: new FailureFormatter(),
+  translationFormatter: new I18nExpressFormatter()
+});
+
+const queryRule = (query) => {
+  query('email').isEmail();
+  query('date').isISO8601();
+};
+const bodyRule = (body) => {
+  body('count').required().isNumber().integer();
+  body('hint').isString();
+  body().strict(); // make sure there aren't any expected properties in the body
+};
+app.post('/', check.query(queryRule), check.body(bodyRule), function(req, res) {
+  // ...
+});
+```
+
+#### koa.js and koa@next
+
+```
+npm install -S koa-i18n koa-locale
+```
+
+Set up `koa-i18n` and `koa-locale` as per normal
+
+```javascript
+import Validator from 'better-validator';
+
+const WrapperFormatter = Validator.format.response.WrapperFormatter;
+const FailureFormatter = Validator.format.failure.FailureFormatter;
+const I18nExpressFormatter = Validator.format.message.I18nKoaFormatter;
+
+const check = Validator.koa2Middleware({
+  responseFormatter: new WrapperFormatter(),
+  failureFormatter: new FailureFormatter(),
+  translationFormatter: new I18nKoaFormatter()
+});
+
+const queryRule = (query) => {
+  query('email').isEmail();
+  query('date').isISO8601();
+};
+const paramsRule = (params) => {
+  params('id').required();
+};
+route.get('/:id/', check.query(queryRule), check.params(paramsRule), otherFunction);
+```
+
+## Custom Validators
+TODO
+
+## Custom Formatters
 TODO
 
 ## License
