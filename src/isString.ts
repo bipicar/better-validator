@@ -34,4 +34,14 @@ export class IsString extends Base {
     this.satisfies('notMatch', (value) => !Base.hasValue(value) || !regex.test(value));
     return this;
   }
+
+  length(expected: number): this {
+    this.satisfies('length', (value) => !Base.hasValue(value) || value.length === expected);
+    return this;
+  }
+
+  lengthInRange(lower: number, upper: number): this {
+    this.satisfies('lengthInRange', (value) => !Base.hasValue(value) || (lower === undefined || value.length >= lower) && (upper === undefined || value.length <= upper));
+    return this;
+  }
 }

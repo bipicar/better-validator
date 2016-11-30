@@ -323,7 +323,7 @@ All checks that start with `is` are mounted into the `isString()` module along w
 * `isVariableWidth()`, `notVariableWidth()`
 * `isWhitelisted(chars)`, `notWhitelisted(chars)`
 
-Also regular expression checks can be performed with `isMatch(regex)` and `notMatch(regex)`
+Also regular expression checks can be performed with `isMatch(regex)`, `notMatch(regex)`, `length(expected)` and `lengthInRange(lower, upper)`
 
 Like all other constraints, these amy be chained together:
 
