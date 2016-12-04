@@ -18,22 +18,6 @@ export class ValidatorFactory {
   constructor(options) {
     this.options = _.defaults({}, options, ValidatorFactory.defaultOptions, DEFAULT_OPTIONS);
     this.tests = [];
-    // const factory = (value, rules) => {
-    //   const test = {
-    //     validator: new IsAnything(null),
-    //     value
-    //   };
-    //
-    //   if (rules && _.isFunction(rules)) {
-    //     rules(test.validator);
-    //     return test.validator.test(test.value);
-    //   }
-    //
-    //   this.tests.push(test);
-    //   return test.validator;
-    // };
-    // factory.run = this.run.bind(this);
-    // return factory;
   }
 
   create(value: any): IsAnything {
