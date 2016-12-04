@@ -6,6 +6,7 @@ import {IsArrayOf} from './isArrayOf';
 import {IsNumber} from './isNumber';
 import {IsObject, objectValidator} from './isObject';
 import {IsString} from './isString';
+import {IsBoolean} from './isBoolean';
 
 export class IsAnything extends Base {
   constructor(path: (string|number)[] | null) {
@@ -15,6 +16,12 @@ export class IsAnything extends Base {
   isNumber() {
     const child = new IsNumber(this.path);
     this.satisfies('isNumber', (value) => (!Base.hasValue(value) || _.isNumber(value)) && (!isNaN(value) || value === undefined) && child.test(value));
+    return child;
+  }
+
+  isBoolean() {
+    const child = new IsBoolean(this.path);
+    this.satisfies('isBoolean', (value) => (!Base.hasValue(value) || _.isBoolean(value)) && child.test(value));
     return child;
   }
 

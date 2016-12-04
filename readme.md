@@ -343,6 +343,18 @@ Like all other constraints, these amy be chained together:
 validator(value).isAlphanumeric().isLowercase();
 ```
 
+### isBoolean
+
+Makes sure the value is a boolean.
+
+```javascript
+validator(value).isBoolean();
+```
+
+```javascript
+validator(value).isBoolean().isEqual(true);
+```
+
 ### isNumber
 
 Makes sure the value is a number.
