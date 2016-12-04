@@ -547,10 +547,32 @@ const check = Validator.koa2Middleware({
 // will wrap the failures like {"type": "ValidationError", "failures": [...]}
 ```
 
-## Custom Validators
-TODO
-
 ## Custom Formatters
+
+Custom formatters may be used in place of any of the provided ones.
+
+A customer formatter is either a function or an object that has a `format` method.
+
+```javascript
+function myFormatter(failure) {
+  return {
+    message: 'work something out here'
+  };
+}
+```
+
+```javascript
+class MyFormatter {
+  format(failure) {
+    return {
+      message: 'work something out here'
+    };
+  }
+}
+const formatter = new MyFormatter();
+```
+
+## Custom Validators
 TODO
 
 ## License
