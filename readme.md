@@ -31,6 +31,11 @@ import Validator from 'better-validator';
 const validator = Validator.create(options); // can also use new Validator(), but this has better type support due to trying to keep as much backwards compatibility as possible with v1.x
 ```
 
+Options
+
+- `failureFormatter` function or formatter class that will be used to format
+each failure that is created. See below (quite a long way below, somewhat near the bottom).
+
 Simple validation
 
 ```javascript
@@ -484,6 +489,62 @@ const paramsRule = (params) => {
   params('id').required();
 };
 route.get('/:id/', check.query(queryRule), check.params(paramsRule), otherFunction);
+```
+
+## Provided Formatters
+
+### Failure Formatter
+
+A *failure formatter* can be provided in the options for a validator. This is responsible for
+a raw failure object and re-formatting it to match desired outcome. There is one failure
+formatter provided
+
+#### Validator.format.failure.FailureFormatter
+
+Example below of a provided failure formatter, showing its default option values.
+
+```javascript
+const FailureFormatter = Validator.format.failure.FailureFormatter;
+const PathFormatter = Validator.format.path.PathFormatter;
+const formatterOptions = {
+  pathElement: 'parameter',
+  pathFormatter: new PathFormatter({
+    initialSeparator: '',
+    separator: '.'
+  })
+};
+const validatorOptions = new FailureFormatter(formatterOptions);
+const validator = new Validator(validatorOptions);
+
+// will change the `path` in each failure to `parameter` and format it as an 
+// string rather than an array
+```
+
+### Response Formatter
+
+The middleware (express, koa and koa@next) also take a *response formatter*. This takes in the
+array of failures and determines how is is presented in the response.
+
+#### Validator.format.response.WrapperFormatter
+
+This wraps the failures in an object, based on the given `staticTemplate`.
+
+```javascript
+const WrapperFormatter = Validator.format.response.WrapperFormatter;
+const FailureFormatter = Validator.format.failure.FailureFormatter;
+
+const wrapperOptions = {
+  staticTemplate: {
+    type: 'ValidationError'
+  },
+  wrapperElement: 'failures'
+};
+const check = Validator.koa2Middleware({
+  responseFormatter: new WrapperFormatter(),
+  failureFormatter: new FailureFormatter()
+});
+
+// will wrap the failures like {"type": "ValidationError", "failures": [...]}
 ```
 
 ## Custom Validators
