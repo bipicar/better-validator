@@ -1,10 +1,10 @@
-import {Failure} from './base';
+import {Failure} from './Base';
 import * as format from './format';
-import {IsAnything} from './isAnything';
-import {ExpressMiddleware} from './middleware/expressMiddleware';
-import {KoaMiddleware} from './middleware/koaMiddleware';
-import {Koa2Middleware} from './middleware/koa2Middleware';
-import {ValidatorFactory} from './validatorFactory';
+import {IsAnything} from './IsAnything';
+import {ExpressMiddleware} from './middleware/ExpressMiddleware';
+import {KoaMiddleware} from './middleware/KoaMiddleware';
+import {Koa2Middleware} from './middleware/Koa2Middleware';
+import {ValidatorFactory} from './ValidatorFactory';
 
 declare type factoryRunFunction = (value: any, rules) => IsAnything | Failure[];
 declare type factoryFunction = (value: any) => IsAnything;

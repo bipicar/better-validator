@@ -1,11 +1,11 @@
 /// <reference types="underscore" />
 
 import * as _ from 'underscore';
-import {Base} from '../base';
-import {Helpers} from '../helpers';
-import {IsObject} from '../isObject';
-import {IsString} from '../isString';
-import {ValidatorFactory} from '../validatorFactory';
+import {Base} from '../Base';
+import {Helpers} from '../Helpers';
+import {IsObject} from '../IsObject';
+import {IsString} from '../IsString';
+import {ValidatorFactory} from '../ValidatorFactory';
 
 export class KoaMiddleware {
   options: any;

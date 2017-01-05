@@ -1,7 +1,7 @@
 /// <reference types="underscore" />
 
 import * as _ from 'underscore';
-import {Base, Failure} from './base';
+import {Base, Failure} from './Base';
 
 export declare type ItemValidatorFactory = (path: (string|number)[]) => Base;
 

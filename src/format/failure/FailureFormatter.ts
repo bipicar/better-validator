@@ -2,7 +2,7 @@
 
 import * as _ from 'underscore';
 
-import {Helpers} from '../../helpers';
+import {Helpers} from '../../Helpers';
 import {PathFormatter} from '../path';
 
 const DEFAULT_OPTIONS = {

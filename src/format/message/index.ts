@@ -1,2 +1,2 @@
-export * from "./i18nExpressFormatter";
-export * from "./i18nKoaFormatter";
+export * from "./I18nExpressFormatter";
+export * from "./I18nKoaFormatter";

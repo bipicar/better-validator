@@ -1,1 +1,1 @@
-export * from './pathFormatter';
+export * from './PathFormatter';

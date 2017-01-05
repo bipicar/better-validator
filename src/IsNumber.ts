@@ -1,4 +1,4 @@
-import {Base} from './base';
+import {Base} from './Base';
 
 export class IsNumber extends Base {
   constructor(path: (string|number)[]) {

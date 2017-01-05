@@ -1,7 +1,7 @@
 /// <reference types="underscore" />
 
 import * as _ from 'underscore';
-import {Base} from './base';
+import {Base} from './Base';
 
 export declare type ObjectValidator = (ChildValidator) => void;
 export declare type BaseConstructor = new (path: (string|number)[]) => Base;

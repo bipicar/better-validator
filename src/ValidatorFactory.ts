@@ -1,9 +1,9 @@
 /// <reference types="underscore" />
 
 import * as _ from 'underscore';
-import {Base} from './base';
-import {Helpers} from './helpers';
-import {IsAnything} from './isAnything';
+import {Base} from './Base';
+import {Helpers} from './Helpers';
+import {IsAnything} from './IsAnything';
 
 const DEFAULT_OPTIONS = {
   failureFormatter: null,

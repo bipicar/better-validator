@@ -1,13 +1,13 @@
 /// <reference types="underscore" />
 
 import * as _ from 'underscore';
-import {Base} from '../base';
-import {Helpers} from '../helpers';
-import {IsObject} from '../isObject';
-import {IsString} from '../isString';
-import {ValidatorFactory} from '../validatorFactory';
+import {Base} from '../Base';
+import {Helpers} from '../Helpers';
+import {IsObject} from '../IsObject';
+import {IsString} from '../IsString';
+import {ValidatorFactory} from '../ValidatorFactory';
 
-export class ExpressMiddleware {
+export class Koa2Middleware {
   options: any;
 
   constructor(options) {
@@ -15,42 +15,43 @@ export class ExpressMiddleware {
   }
 
   query(rule) {
-    return (req, res, next) => {
+    return async (ctx, next) => {
       const validator = new ValidatorFactory(this.options);
-      const anythingValidator = validator.create(req.query).display('?');
+      const anythingValidator = validator.create(ctx.query).display('?');
       const objectValidator = new IsObject(anythingValidator.path, rule, IsString, 'isString');
       anythingValidator.satisfies('isObjectOfString', (value) => (!Base.hasValue(value) || _.isObject(value)) && objectValidator.test(value));
-      this.checkErrors(validator, req, res, next);
+      await this.checkErrors(validator, ctx, next);
     };
   }
 
   body(rule) {
-    return (req, res, next) => {
+    return async (ctx, next) => {
       const validator = new ValidatorFactory(this.options);
-      validator.create(req.body).isObject(rule);
-      this.checkErrors(validator, req, res, next);
+      validator.create(ctx.request.body).isObject(rule);
+      await this.checkErrors(validator, ctx, next);
     };
   }
 
   params(rule) {
-    return (req, res, next) => {
+    return async (ctx, next) => {
       const validator = new ValidatorFactory(this.options);
-      const anythingValidator = validator.create(req.params).display('@');
+      const anythingValidator = validator.create(ctx.params).display('@');
       const objectValidator = new IsObject(anythingValidator.path, rule, IsString, 'isString');
       anythingValidator.satisfies('isObjectOfString', (value) => (!Base.hasValue(value) || _.isObject(value)) && objectValidator.test(value));
-      this.checkErrors(validator, req, res, next);
+      await this.checkErrors(validator, ctx, next);
     };
   }
 
-  checkErrors(validator, req, res, next) {
+  async checkErrors(validator, ctx, next) {
     const failures = validator.run();
     if (!failures || !failures.length) {
-      next();
+      await next();
       return;
     }
 
-    res.status(400).send(Helpers.format(this.options.responseFormatter,
-      _.map(failures, (failure) => Helpers.format(this.options.translationFormatter, failure, req, res))
-    ));
+    ctx.status = 400;
+    ctx.body = Helpers.format(this.options.responseFormatter,
+      _.map(failures, (failure) => Helpers.format(this.options.translationFormatter, failure, ctx))
+    );
   }
 }

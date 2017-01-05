@@ -1,12 +1,12 @@
 /// <reference types="underscore" />
 
 import * as _ from 'underscore';
-import {Base} from './base';
-import {IsArrayOf} from './isArrayOf';
-import {IsNumber} from './isNumber';
-import {IsObject, ObjectValidator} from './isObject';
-import {IsString} from './isString';
-import {IsBoolean} from './isBoolean';
+import {Base} from './Base';
+import {IsArrayOf} from './IsArrayOf';
+import {IsNumber} from './IsNumber';
+import {IsObject, ObjectValidator} from './IsObject';
+import {IsString} from './IsString';
+import {IsBoolean} from './IsBoolean';
 
 export class IsAnything extends Base {
   constructor(path: (string|number)[] | null) {
