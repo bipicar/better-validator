@@ -2,18 +2,18 @@
 
 import * as _ from 'underscore';
 
-export declare type rule = (validator: any) => boolean | Failure[];
+export declare type Rule = (validator: any) => boolean | Failure[];
 
 export declare type Failure = {
   failed: string,
   path: (string|number)[],
-  rule?: rule,
+  rule?: Rule,
   value: any
 };
 
 export class Base {
   path: (string|number)[];
-  tests: {name: string, rule: rule}[];
+  tests: {name: string, rule: Rule}[];
 
   constructor(path: string | (string|number)[] | null) {
     this.path = !path ? [] : typeof path !== 'string' ? path : [path];
@@ -47,12 +47,12 @@ export class Base {
     return this;
   }
 
-  satisfies(name: string, rule: rule): this {
+  satisfies(name: string, rule: Rule): this {
     this.tests.push({name, rule});
     return this;
   }
 
-  check(rule: rule) {
+  check(rule: Rule) {
     return rule && rule(this) || this;
   }
 

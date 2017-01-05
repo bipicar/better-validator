@@ -3,17 +3,17 @@
 import * as _ from 'underscore';
 import {Base} from './base';
 
-export declare type objectValidator = (childValidator) => void;
-export declare type baseConstructor = new (path: (string|number)[]) => Base;
+export declare type ObjectValidator = (ChildValidator) => void;
+export declare type BaseConstructor = new (path: (string|number)[]) => Base;
 
 export class IsObject extends Base {
   properties: string[];
-  objectValidator: objectValidator;
-  elementValidator: baseConstructor;
+  objectValidator: ObjectValidator;
+  elementValidator: BaseConstructor;
   elementValidatorName: string;
 
-  constructor(path: (string|number)[], objectValidator: objectValidator,
-              elementValidator: baseConstructor, elementValidatorName: string) {
+  constructor(path: (string|number)[], objectValidator: ObjectValidator,
+              elementValidator: BaseConstructor, elementValidatorName: string) {
     super(path);
 
     this.objectValidator = objectValidator;

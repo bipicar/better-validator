@@ -3,13 +3,13 @@
 import * as _ from 'underscore';
 import {Base, Failure} from './base';
 
-export declare type itemValidatorFactory = (path: (string|number)[]) => Base;
+export declare type ItemValidatorFactory = (path: (string|number)[]) => Base;
 
 export class IsArrayOf extends Base {
-  itemValidatorFactory: itemValidatorFactory;
+  itemValidatorFactory: ItemValidatorFactory;
   itemValidatorName: string;
 
-  constructor(path: (string|number)[], itemValidatorFactory: itemValidatorFactory, itemValidatorName: string) {
+  constructor(path: (string|number)[], itemValidatorFactory: ItemValidatorFactory, itemValidatorName: string) {
     super(path);
     this.itemValidatorFactory = itemValidatorFactory;
     this.itemValidatorName = itemValidatorName;

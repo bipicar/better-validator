@@ -4,7 +4,7 @@ import * as _ from 'underscore';
 import {Base} from './base';
 import {IsArrayOf} from './isArrayOf';
 import {IsNumber} from './isNumber';
-import {IsObject, objectValidator} from './isObject';
+import {IsObject, ObjectValidator} from './isObject';
 import {IsString} from './isString';
 import {IsBoolean} from './isBoolean';
 
@@ -31,13 +31,13 @@ export class IsAnything extends Base {
     return child;
   }
 
-  isObject(objectValidator: objectValidator) {
+  isObject(objectValidator: ObjectValidator) {
     const child = new IsObject(this.path, objectValidator, IsAnything, 'isAnything');
     this.satisfies('isObject', (value) => (!Base.hasValue(value) || _.isObject(value)) && child.test(value));
     return child;
   }
 
-  isObjectArray(childValidator: objectValidator) {
+  isObjectArray(childValidator: ObjectValidator) {
     const factory = (path) => {
       return new IsObject(path, childValidator, IsAnything, 'isAnything');
     };
@@ -46,7 +46,7 @@ export class IsAnything extends Base {
     return child;
   }
 
-  isArray(childValidator: objectValidator) {
+  isArray(childValidator: ObjectValidator) {
     const factory = (path) => {
       const itemValidator = new IsAnything(path);
       childValidator(itemValidator);
