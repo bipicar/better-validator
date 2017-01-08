@@ -40,7 +40,7 @@ export class IsArrayOf extends Base {
     return this;
   }
 
-  lengthInRange(lower: number, upper: number): this {
+  lengthInRange(lower: number | undefined, upper?: number | undefined): this {
     this.satisfies('lengthInRange', (value) => !Base.hasValue(value) || (lower === undefined || value.length >= lower) && (upper === undefined || value.length <= upper));
     return this;
   }

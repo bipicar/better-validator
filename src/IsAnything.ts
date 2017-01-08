@@ -8,6 +8,8 @@ import {IsObject, ObjectValidator} from './IsObject';
 import {IsString} from './IsString';
 import {IsBoolean} from './IsBoolean';
 
+export declare type ArrayValidator = (validator: IsAnything) => void;
+
 export class IsAnything extends Base {
   constructor(path: (string|number)[] | null) {
     super(path);
@@ -46,7 +48,7 @@ export class IsAnything extends Base {
     return child;
   }
 
-  isArray(childValidator: ObjectValidator) {
+  isArray(childValidator: ArrayValidator) {
     const factory = (path) => {
       const itemValidator = new IsAnything(path);
       childValidator(itemValidator);

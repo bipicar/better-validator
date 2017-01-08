@@ -6,6 +6,7 @@ import {Helpers} from '../Helpers';
 import {IsObject} from '../IsObject';
 import {IsString} from '../IsString';
 import {ValidatorFactory} from '../ValidatorFactory';
+import {ObjectValidator, StringObjectValidator} from '../IsObject';
 
 export class Koa2Middleware {
   options: any;
@@ -14,7 +15,7 @@ export class Koa2Middleware {
     this.options = _.defaults({}, options);
   }
 
-  query(rule) {
+  query(rule: StringObjectValidator) {
     return async (ctx, next) => {
       const validator = new ValidatorFactory(this.options);
       const anythingValidator = validator.create(ctx.query).display('?');
@@ -24,7 +25,7 @@ export class Koa2Middleware {
     };
   }
 
-  body(rule) {
+  body(rule: ObjectValidator) {
     return async (ctx, next) => {
       const validator = new ValidatorFactory(this.options);
       validator.create(ctx.request.body).isObject(rule);
@@ -32,7 +33,7 @@ export class Koa2Middleware {
     };
   }
 
-  params(rule) {
+  params(rule: StringObjectValidator) {
     return async (ctx, next) => {
       const validator = new ValidatorFactory(this.options);
       const anythingValidator = validator.create(ctx.params).display('@');

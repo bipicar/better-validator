@@ -2,8 +2,12 @@
 
 import * as _ from 'underscore';
 import {Base} from './Base';
+import {IsString} from './IsString';
 
-export declare type ObjectValidator = (ChildValidator) => void;
+export declare type ObjectValidator = (validator: ChildValidator) => void;
+export declare type ChildValidator = ((property: string) => Base) & (() => IsObject);
+export declare type StringObjectValidator = (validator: StringChildValidator) => void;
+export declare type StringChildValidator = ((property: string) => IsString) & (() => IsObject);
 export declare type BaseConstructor = new (path: (string|number)[]) => Base;
 
 export class IsObject extends Base {

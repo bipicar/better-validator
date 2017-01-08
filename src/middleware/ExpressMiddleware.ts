@@ -6,6 +6,7 @@ import {Helpers} from '../Helpers';
 import {IsObject} from '../IsObject';
 import {IsString} from '../IsString';
 import {ValidatorFactory} from '../ValidatorFactory';
+import {ObjectValidator, StringObjectValidator} from '../IsObject';
 
 export class ExpressMiddleware {
   options: any;
@@ -14,7 +15,7 @@ export class ExpressMiddleware {
     this.options = _.defaults({}, options);
   }
 
-  query(rule) {
+  query(rule: StringObjectValidator) {
     return (req, res, next) => {
       const validator = new ValidatorFactory(this.options);
       const anythingValidator = validator.create(req.query).display('?');
@@ -24,7 +25,7 @@ export class ExpressMiddleware {
     };
   }
 
-  body(rule) {
+  body(rule: ObjectValidator) {
     return (req, res, next) => {
       const validator = new ValidatorFactory(this.options);
       validator.create(req.body).isObject(rule);
@@ -32,7 +33,7 @@ export class ExpressMiddleware {
     };
   }
 
-  params(rule) {
+  params(rule: StringObjectValidator) {
     return (req, res, next) => {
       const validator = new ValidatorFactory(this.options);
       const anythingValidator = validator.create(req.params).display('@');

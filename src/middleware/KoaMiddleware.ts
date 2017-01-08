@@ -6,6 +6,7 @@ import {Helpers} from '../Helpers';
 import {IsObject} from '../IsObject';
 import {IsString} from '../IsString';
 import {ValidatorFactory} from '../ValidatorFactory';
+import {ObjectValidator, StringObjectValidator} from '../IsObject';
 
 export class KoaMiddleware {
   options: any;
@@ -14,7 +15,7 @@ export class KoaMiddleware {
     this.options = _.defaults({}, options);
   }
 
-  query(rule) {
+  query(rule: StringObjectValidator) {
     const self = this;
     return function *(next) {
       const validator = new ValidatorFactory(self.options);
@@ -25,7 +26,7 @@ export class KoaMiddleware {
     };
   }
 
-  body(rule) {
+  body(rule: ObjectValidator) {
     const self = this;
     return function *(next) {
       const validator = new ValidatorFactory(self.options);
@@ -34,7 +35,7 @@ export class KoaMiddleware {
     };
   }
 
-  params(rule) {
+  params(rule: StringObjectValidator) {
     const self = this;
     return function *(next) {
       const validator = new ValidatorFactory(self.options);
