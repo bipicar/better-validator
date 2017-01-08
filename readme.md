@@ -258,6 +258,14 @@ validator(value).isEqual(7);
 validator(value).notEqual('test');
 ```
 
+#### Conditional checks
+
+```javascript
+validator(value).if((value) => value < 7, (conditional) => {
+  conditional.isEqual(4);
+});
+```
+
 ### isObject
 
 Used to validate that the value under test is an object, and to check it's properties.
@@ -516,7 +524,7 @@ const formatterOptions = {
 const validatorOptions = new FailureFormatter(formatterOptions);
 const validator = new Validator(validatorOptions);
 
-// will change the `path` in each failure to `parameter` and format it as an 
+// will change the `path` in each failure to `parameter` and format it as an
 // string rather than an array
 ```
 

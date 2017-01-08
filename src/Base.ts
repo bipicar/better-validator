@@ -47,6 +47,17 @@ export class Base {
     return this;
   }
 
+  if(predicate: (item: any) => boolean, validator: (validator: this) => void) {
+    this.satisfies('if', (value) => {
+      const passed = predicate(value);
+      if (!passed) return [];
+      const child = new (<typeof Base>this.constructor)(this.path) as this;
+      validator(child);
+      return child.test(value);
+    });
+    return this;
+  }
+
   satisfies(name: string, rule: Rule): this {
     this.tests.push({name, rule});
     return this;
