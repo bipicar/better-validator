@@ -16,30 +16,33 @@ export class Koa2Middleware {
   }
 
   query(rule: StringObjectValidator) {
+    const self = this;
     return async (ctx, next) => {
-      const validator = new ValidatorFactory(this.options);
+      const validator = new ValidatorFactory(self.options);
       const anythingValidator = validator.create(ctx.query).display('?');
       const objectValidator = new IsObject(anythingValidator.path, rule, IsString, 'isString');
       anythingValidator.satisfies('isObjectOfString', (value) => (!Base.hasValue(value) || _.isObject(value)) && objectValidator.test(value));
-      await this.checkErrors(validator, ctx, next);
+      await self.checkErrors(validator, ctx, next);
     };
   }
 
   body(rule: ObjectValidator) {
+    const self = this;
     return async (ctx, next) => {
-      const validator = new ValidatorFactory(this.options);
+      const validator = new ValidatorFactory(self.options);
       validator.create(ctx.request.body).isObject(rule);
-      await this.checkErrors(validator, ctx, next);
+      await self.checkErrors(validator, ctx, next);
     };
   }
 
   params(rule: StringObjectValidator) {
+    const self = this;
     return async (ctx, next) => {
-      const validator = new ValidatorFactory(this.options);
+      const validator = new ValidatorFactory(self.options);
       const anythingValidator = validator.create(ctx.params).display('@');
       const objectValidator = new IsObject(anythingValidator.path, rule, IsString, 'isString');
       anythingValidator.satisfies('isObjectOfString', (value) => (!Base.hasValue(value) || _.isObject(value)) && objectValidator.test(value));
-      await this.checkErrors(validator, ctx, next);
+      await self.checkErrors(validator, ctx, next);
     };
   }
 
