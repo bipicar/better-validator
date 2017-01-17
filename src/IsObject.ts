@@ -2,10 +2,11 @@
 
 import * as _ from 'underscore';
 import {Base} from './Base';
+import {IsAnything} from './IsAnything';
 import {IsString} from './IsString';
 
-export declare type ObjectValidator = (validator: ChildValidator) => void;
-export declare type ChildValidator = ((property: string) => Base) & (() => IsObject);
+export declare type ObjectValidator = (validator: ChildValidator | StringChildValidator) => void;
+export declare type ChildValidator = ((property: string) => IsAnything) & (() => IsObject);
 export declare type StringObjectValidator = (validator: StringChildValidator) => void;
 export declare type StringChildValidator = ((property: string) => IsString) & (() => IsObject);
 export declare type BaseConstructor = new (path: (string|number)[]) => Base;
