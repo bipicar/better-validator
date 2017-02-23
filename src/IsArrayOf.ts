@@ -19,6 +19,7 @@ export class IsArrayOf extends Base {
 
   validateArray() {
     this.satisfies('isArray', (value) => {
+      if (value === null || value === undefined) return true;
       if (!_.isArray(value)) return false;
 
       let failures: Failure[] = [];
