@@ -20,8 +20,8 @@ export class Base {
     this.tests = [];
   }
 
-  static hasValue(value: any): boolean {
-    return value !== undefined && value !== null;
+  static hasValue(value: any, allowNull: boolean): boolean {
+    return (!allowNull) ? (value !== undefined && value !== null) : value !== undefined;
   }
 
   display(path: string): this {
@@ -33,7 +33,13 @@ export class Base {
 
   required(): this {
     const child = new (<typeof Base>this.constructor)(this.path) as this;
-    this.satisfies('required', (value) => Base.hasValue(value) && child.test(value));
+    this.satisfies('required', (value) => Base.hasValue(value, false) && child.test(value));
+    return child;
+  }
+
+  requiredWithNull(): this {
+    const child = new (<typeof Base>this.constructor)(this.path) as this;
+    this.satisfies('requiredWithNull', (value) => Base.hasValue(value, true) && child.test(value));
     return child;
   }
 
