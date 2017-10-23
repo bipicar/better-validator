@@ -110,6 +110,40 @@ describe('basic usage', () => {
     expect(errors.length).toBe(0);
   });
 
+  it('requiredWithNull', () => {
+    const validator = new Validator(OPTIONS_RAW);
+
+    let errors = validator(null, (item) => {
+      item.requiredWithNull();
+    });
+
+    expect(errors).toBeDefined();
+    expect(errors.length).toBe(0);
+
+    errors = validator(undefined, (item) => {
+      item.requiredWithNull();
+    });
+
+    expect(errors).toBeDefined();
+    expect(errors.length).toBe(1);
+    expect(errors).toContain(jasmine.objectContaining({path: [], failed: 'requiredWithNull'}));
+
+    errors = validator('aslkjdf', (item) => {
+      item.requiredWithNull().isString();
+    });
+
+    expect(errors).toBeDefined();
+    expect(errors.length).toBe(0);
+
+    errors = validator('aslkjdf', (item) => {
+      item.isString().requiredWithNull();
+    });
+
+    expect(errors).toBeDefined();
+    expect(errors.length).toBe(0);
+  });
+
+
   it('isEqual', () => {
     const validator = new Validator(OPTIONS_RAW);
     const rule = (item) => {
