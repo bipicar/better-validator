@@ -1,5 +1,3 @@
-/// <reference types="underscore" />
-
 import * as _ from 'underscore';
 import {Base} from './Base';
 import {Helpers} from './Helpers';
@@ -7,48 +5,49 @@ import {IsAnything} from './IsAnything';
 
 const DEFAULT_OPTIONS = {
   failureFormatter: null,
-  responseFormatter: null
+  responseFormatter: null,
 };
 
 export class ValidatorFactory {
-  options: any;
-  tests: {validator: Base, value: any}[];
-  static defaultOptions: any;
+  protected static defaultOptions: any;
+
+  protected options: any;
+  protected tests: {validator: Base, value: any}[];
 
   constructor(options) {
     this.options = _.defaults({}, options, ValidatorFactory.defaultOptions, DEFAULT_OPTIONS);
     this.tests = [];
   }
 
-  create(value: any): IsAnything {
+  public create(value: any): IsAnything {
     const test = {
       validator: new IsAnything(null),
-      value
+      value,
     };
 
     this.tests.push(test);
     return test.validator;
   }
 
-  createAndRun(value: any, rules: (validator: Base) => void): any[] { // TODO type
+  public createAndRun(value: any, rules: (validator: Base) => void): any[] { // TODO type
     const test = {
       validator: new IsAnything(null),
-      value
+      value,
     };
 
     rules(test.validator);
     return test.validator.test(test.value);
   }
 
-  run() {
-    const failures = _.flatten(_.map(this.tests, (test) => test.validator.test(test.value)) as Array<any>);
+  public run() {
+    const failures = _.flatten(_.map(this.tests, test => test.validator.test(test.value)) as any[]);
 
     const formatter = this.options.failureFormatter;
     if (!formatter) {
       return failures;
     }
 
-    return _.map(failures, (failure) => {
+    return _.map(failures, failure => {
       return Helpers.format(formatter, failure);
     });
   }

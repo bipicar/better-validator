@@ -34,9 +34,9 @@ describe('basic usage', () => {
 
     expect(errors).toBeDefined();
     expect(errors.length).toBe(3);
-    expect(errors).toContain(jasmine.objectContaining({path: ['test1'], failed: 'notLowercase'}));
-    expect(errors).toContain(jasmine.objectContaining({path: ['test1'], failed: 'isEmail'}));
-    expect(errors).toContain(jasmine.objectContaining({path: ['test3'], failed: 'required'}));
+    expect(errors).toContain(jasmine.objectContaining({ path: ['test1'], failed: 'notLowercase' }));
+    expect(errors).toContain(jasmine.objectContaining({ path: ['test1'], failed: 'isEmail' }));
+    expect(errors).toContain(jasmine.objectContaining({ path: ['test3'], failed: 'required' }));
   });
 
   it('re-usable rules', () => {
@@ -48,7 +48,7 @@ describe('basic usage', () => {
 
     expect(errors).toBeDefined();
     expect(errors.length).toBe(1);
-    expect(errors).toContain(jasmine.objectContaining({path: [], failed: 'required'}));
+    expect(errors).toContain(jasmine.objectContaining({ path: [], failed: 'required' }));
   });
 
   it('optional', () => {
@@ -85,7 +85,7 @@ describe('basic usage', () => {
 
     expect(errors).toBeDefined();
     expect(errors.length).toBe(1);
-    expect(errors).toContain(jasmine.objectContaining({path: [], failed: 'required'}));
+    expect(errors).toContain(jasmine.objectContaining({ path: [], failed: 'required' }));
 
     errors = validator(null, (item) => {
       item.isString().required();
@@ -93,7 +93,7 @@ describe('basic usage', () => {
 
     expect(errors).toBeDefined();
     expect(errors.length).toBe(1);
-    expect(errors).toContain(jasmine.objectContaining({path: [], failed: 'required'}));
+    expect(errors).toContain(jasmine.objectContaining({ path: [], failed: 'required' }));
 
     errors = validator('aslkjdf', (item) => {
       item.required().isString();
@@ -126,7 +126,7 @@ describe('basic usage', () => {
 
     expect(errors).toBeDefined();
     expect(errors.length).toBe(1);
-    expect(errors).toContain(jasmine.objectContaining({path: [], failed: 'requiredWithNull'}));
+    expect(errors).toContain(jasmine.objectContaining({ path: [], failed: 'requiredWithNull' }));
 
     errors = validator('aslkjdf', (item) => {
       item.requiredWithNull().isString();
@@ -141,6 +141,13 @@ describe('basic usage', () => {
 
     expect(errors).toBeDefined();
     expect(errors.length).toBe(0);
+
+    errors = validator(null, (item) => {
+      item.requiredWithNull().isString().isEmail();
+    });
+
+    expect(errors).toBeDefined();
+    expect(errors.length).toBe(0);
   });
 
 
@@ -151,14 +158,14 @@ describe('basic usage', () => {
     };
 
     expect(validator(17, rule)).toEqual([]);
-    expect(validator(16, rule)).toContain(jasmine.objectContaining({path: [], failed: 'isEqual'}));
-    expect(validator(17.0000001, rule)).toContain(jasmine.objectContaining({path: [], failed: 'isEqual'}));
-    expect(validator('17', rule)).toContain(jasmine.objectContaining({path: [], failed: 'isEqual'}));
-    expect(validator('asdf', rule)).toContain(jasmine.objectContaining({path: [], failed: 'isEqual'}));
-    expect(validator(new Date(), rule)).toContain(jasmine.objectContaining({path: [], failed: 'isEqual'}));
-    expect(validator(/./, rule)).toContain(jasmine.objectContaining({path: [], failed: 'isEqual'}));
-    expect(validator(true, rule)).toContain(jasmine.objectContaining({path: [], failed: 'isEqual'}));
-    expect(validator(false, rule)).toContain(jasmine.objectContaining({path: [], failed: 'isEqual'}));
+    expect(validator(16, rule)).toContain(jasmine.objectContaining({ path: [], failed: 'isEqual' }));
+    expect(validator(17.0000001, rule)).toContain(jasmine.objectContaining({ path: [], failed: 'isEqual' }));
+    expect(validator('17', rule)).toContain(jasmine.objectContaining({ path: [], failed: 'isEqual' }));
+    expect(validator('asdf', rule)).toContain(jasmine.objectContaining({ path: [], failed: 'isEqual' }));
+    expect(validator(new Date(), rule)).toContain(jasmine.objectContaining({ path: [], failed: 'isEqual' }));
+    expect(validator(/./, rule)).toContain(jasmine.objectContaining({ path: [], failed: 'isEqual' }));
+    expect(validator(true, rule)).toContain(jasmine.objectContaining({ path: [], failed: 'isEqual' }));
+    expect(validator(false, rule)).toContain(jasmine.objectContaining({ path: [], failed: 'isEqual' }));
   });
 
   it('notEqual', () => {
@@ -167,7 +174,7 @@ describe('basic usage', () => {
       item.notEqual(17);
     };
 
-    expect(validator(17, rule)).toContain(jasmine.objectContaining({path: [], failed: 'notEqual'}));
+    expect(validator(17, rule)).toContain(jasmine.objectContaining({ path: [], failed: 'notEqual' }));
     expect(validator(16, rule)).toEqual([]);
     expect(validator(17.0000001, rule)).toEqual([]);
     expect(validator('17', rule)).toEqual([]);

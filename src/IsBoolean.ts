@@ -1,7 +1,7 @@
 import {Base} from './Base';
 
 export class IsBoolean extends Base {
-  constructor(path: (string|number)[]) {
+  constructor(path: (string | number)[]) {
     super(path);
   }
 }
