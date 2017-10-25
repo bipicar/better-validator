@@ -1,14 +1,12 @@
-/// <reference types="underscore" />
-
 import * as _ from 'underscore';
 
 const DEFAULT_OPTIONS = {
+  lookupPrefix: '',
   messageElement: 'message',
-  lookupPrefix: ''
 };
 
 export class I18nKoaFormatter {
-  options: any;
+  protected options: any;
 
   /**
    * Create new message formatter
@@ -26,7 +24,7 @@ export class I18nKoaFormatter {
    * @param {Context} ctx - express req object
    * @return {object} formatted failure
    */
-  format(failure, ctx) {
+  public format(failure, ctx) {
     failure[this.options.messageElement] = ctx.i18n.__(this.options.lookupPrefix + failure.failed, failure);
     return failure;
   }

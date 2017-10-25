@@ -1,5 +1,5 @@
 import * as _ from 'underscore';
-import {Base, Failure} from './Base';
+import {Base, IFailure} from './Base';
 
 export declare type ItemValidatorFactory = (path: (string | number)[]) => Base;
 
@@ -30,7 +30,7 @@ export class IsArrayOf extends Base {
       if (value === null || value === undefined) return true;
       if (!_.isArray(value)) return false;
 
-      let failures: Failure[] = [];
+      let failures: IFailure[] = [];
       for (let i = 0; i < value.length; i++) {
         const item = value[i];
         const path = this.path.slice();

@@ -31,7 +31,17 @@
     "array-type": [
       true,
       "array"
-    ]
+    ],
+    "whitespace": {
+      "options": [
+        "check-branch",
+        "check-decl",
+        "check-operator",
+        "check-separator",
+        "check-type"
+      ]
+    },
+    "no-angle-bracket-type-assertion": false
   },
   "rulesDirectory": []
 }

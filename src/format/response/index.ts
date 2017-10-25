@@ -1,1 +1,1 @@
-export * from "./WrapperFormatter";
+export * from './WrapperFormatter';

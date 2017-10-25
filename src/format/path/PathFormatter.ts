@@ -1,14 +1,12 @@
-/// <reference types="underscore" />
-
 import * as _ from 'underscore';
 
 const DEFAULT_OPTIONS = {
   initialSeparator: '',
-  separator: '.'
+  separator: '.',
 };
 
 export class PathFormatter {
-  options: any;
+  protected options: any;
 
   /**
    * Create new path formatter
@@ -25,7 +23,7 @@ export class PathFormatter {
    * @param {string[]} path - path parts array
    * @return {string} formatted path
    */
-  format(path: (string|number)[]) {
+  public format(path: (string | number)[]) {
     if (!path || !path.length) return '';
 
     let formatted = '';
@@ -47,11 +45,11 @@ export class PathFormatter {
     return formatted;
   }
 
-  formatIndex(index: number, position: number, length: number) {
+  protected formatIndex(index: number, position: number, length: number) {
     return `[${index}]`;
   }
 
-  formatProperty(property: string, position: number, length: number) {
+  protected formatProperty(property: string, position: number, length: number) {
     return (position > 0 ? this.options.separator : this.options.initialSeparator) + property;
   }
 }

@@ -1,22 +1,20 @@
-/// <reference types="underscore" />
-
 import * as _ from 'underscore';
 
-export declare type Rule = (validator: any) => boolean | Failure[];
+export interface IFailure {
+  failed: string;
+  path: (string | number)[];
+  rule?: Rule;
+  value: any;
+}
 
-export declare type Failure = {
-  failed: string,
-  path: (string | number)[],
-  rule?: Rule,
-  value: any,
-};
+export declare type Rule = (validator: any) => boolean | IFailure[];
 
 export class Base {
   public static hasValue(value: any, allowNull?: boolean): boolean {
     return (!allowNull) ? (value !== undefined && value !== null) : value !== undefined;
   }
 
-  protected path: (string | number)[];
+  public path: (string | number)[];
   protected tests: {name: string, rule: Rule}[];
 
   constructor(path: string | (string | number)[] | null) {
@@ -73,8 +71,8 @@ export class Base {
     return rule && rule(this) || this;
   }
 
-  public test(value: any): Failure[] {
-    const failures: Failure[] = [];
+  public test(value: any): IFailure[] {
+    const failures: IFailure[] = [];
     for (const test of this.tests) {
       const results = test.rule(value);
 

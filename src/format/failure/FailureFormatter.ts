@@ -1,5 +1,3 @@
-/// <reference types="underscore" />
-
 import * as _ from 'underscore';
 
 import {Helpers} from '../../Helpers';
@@ -7,11 +5,11 @@ import {PathFormatter} from '../path';
 
 const DEFAULT_OPTIONS = {
   pathElement: 'parameter',
-  pathFormatter: new PathFormatter(null)
+  pathFormatter: new PathFormatter(null),
 };
 
 export class FailureFormatter {
-  options: any;
+  protected options: any;
 
   /**
    * Create new error formatter
@@ -28,11 +26,11 @@ export class FailureFormatter {
    * @param {object} failure - validation failure
    * @return {object} formatted failure
    */
-  format(failure) {
+  public format(failure) {
     return {
       [this.options.pathElement]: Helpers.format(this.options.pathFormatter, failure.path),
       failed: failure.failed,
-      value: failure.value
+      value: failure.value,
     };
   }
 }

@@ -1,14 +1,12 @@
-/// <reference types="underscore" />
-
 import * as _ from 'underscore';
 
 const DEFAULT_OPTIONS = {
+  lookupPrefix: '',
   messageElement: 'message',
-  lookupPrefix: ''
 };
 
 export class I18nExpressFormatter {
-  options: any;
+  protected options: any;
 
   /**
    * Create new message formatter
@@ -26,7 +24,7 @@ export class I18nExpressFormatter {
    * @param {object} req - express req object
    * @return {object} formatted failure
    */
-  format(failure, req) {
+  public format(failure, req) {
     failure[this.options.messageElement] = req.__(this.options.lookupPrefix + failure.failed, failure);
     return failure;
   }
