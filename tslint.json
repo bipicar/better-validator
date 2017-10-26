@@ -10,7 +10,7 @@
       "single"
     ],
     "curly": [
-      false,
+      true,
       "ignore-same-line"
     ],
     "no-empty": false,
