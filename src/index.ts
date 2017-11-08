@@ -26,7 +26,7 @@ class Validator {
     return new Koa2Middleware(options);
   }
 
-  public static create(options?) {
+  public static create(options?): (value: any) => IsAnything & {run?: () => IFailure[]} {
     const factory = new ValidatorFactory(options);
     const fn: factoryFunction & tester = value => {
       return factory.create(value);
