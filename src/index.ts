@@ -26,13 +26,13 @@ class Validator {
     return new Koa2Middleware(options);
   }
 
-  public static create(options?): (value: any) => IsAnything & {run?: () => IFailure[]} {
+  public static create(options?): (value: any) => IsAnything & {run: () => IFailure[]} {
     const factory = new ValidatorFactory(options);
     const fn: factoryFunction & tester = value => {
       return factory.create(value);
     };
     fn.run = factory.run.bind(factory);
-    return fn;
+    return fn as any;
   }
 
   public static get format() {
