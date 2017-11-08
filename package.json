@@ -1,6 +1,6 @@
 {
   "name": "better-validator",
-  "version": "2.1.4",
+  "version": "2.1.5",
   "description": "Second generation object or request validator for node.js",
   "homepage": "https://bitbucket.org/gregbacchus/better-validator/overview",
   "keywords": [
