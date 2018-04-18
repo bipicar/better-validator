@@ -43,6 +43,11 @@ export class Base {
     return child;
   }
 
+  isIncludedInArray(array:Array<any> = []): this {
+    this.satisfies('isIncludedInArray', (value) => _.contains(array, value));
+    return this;
+  }
+
   isEqual(expected: any): this {
     this.satisfies('isEqual', (value) => value === expected);
     return this;
