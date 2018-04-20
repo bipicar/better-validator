@@ -310,6 +310,18 @@ validator(value).isString();
 validator(value).isString().isEmail();
 ```
 
+### isInArray
+
+Makes sure the value is of type string.
+
+```javascript
+validator(value).isIncludedInArray(['define1','define2']);
+```
+
+```javascript
+validator(value).isString().isEmail().isIncludedInArray(['define1','define2']);
+```
+
 #### isString Checks
 
 Checks from the library [validator](https://www.npmjs.com/package/validator) are included. Please see the link for more details.
