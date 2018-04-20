@@ -1,65 +1,63 @@
-/// <reference types="underscore" />
-
 import * as _ from 'underscore';
 
-export declare type Rule = (validator: any) => boolean | Failure[];
+export interface IFailure {
+  failed: string;
+  path: (string | number)[];
+  rule?: Rule;
+  value: any;
+}
 
-export declare type Failure = {
-  failed: string,
-  path: (string|number)[],
-  rule?: Rule,
-  value: any
-};
+export declare type Rule = (validator: any) => boolean | IFailure[];
 
 export class Base {
-  path: (string|number)[];
-  tests: {name: string, rule: Rule}[];
+  public static hasValue(value: any, allowNull?: boolean): boolean {
+    return (!allowNull) ? (value !== undefined && value !== null) : value !== undefined;
+  }
 
-  constructor(path: string | (string|number)[] | null) {
+  public path: (string | number)[];
+  protected tests: {name: string, rule: Rule}[];
+
+  constructor(path: string | (string | number)[] | null) {
     this.path = !path ? [] : typeof path !== 'string' ? path : [path];
     this.tests = [];
   }
 
-  static hasValue(value: any, allowNull: boolean): boolean {
-    return (!allowNull) ? (value !== undefined && value !== null) : value !== undefined;
-  }
-
-  display(path: string): this {
+  public display(path: string): this {
     if (path !== null && path !== undefined) {
       this.path.push(path);
     }
     return this;
   }
 
-  required(): this {
+  public required(): this {
     const child = new (<typeof Base>this.constructor)(this.path) as this;
-    this.satisfies('required', (value) => Base.hasValue(value, false) && child.test(value));
+    this.satisfies('required', value => Base.hasValue(value, false) && child.test(value));
     return child;
   }
 
-  requiredWithNull(): this {
+  public requiredWithNull(): this {
     const child = new (<typeof Base>this.constructor)(this.path) as this;
-    this.satisfies('requiredWithNull', (value) => Base.hasValue(value, true) && child.test(value));
+    this.satisfies('requiredWithNull', value => Base.hasValue(value, true) && child.test(value));
     return child;
   }
 
-  isIncludedInArray(array:Array<any> = []): this {
+  public isIncludedInArray(array:Array<any> = []): this {
     this.satisfies('isIncludedInArray', (value) => _.contains(array, value));
     return this;
   }
 
-  isEqual(expected: any): this {
-    this.satisfies('isEqual', (value) => value === expected);
+  public isEqual(expected: any): this {
+    this.satisfies('isEqual', value => value === expected);
     return this;
   }
 
-  notEqual(expected: any): this {
-    this.satisfies('notEqual', (value) => value !== expected);
+  public notEqual(expected: any): this {
+    this.satisfies('notEqual', value => value !== expected);
     return this;
   }
 
-  if(predicate: (item: any) => boolean, validator: (validator: this) => void) {
-    this.satisfies('if', (value) => {
+  public if(predicate: (item: any) => boolean, validator: (validator: this) => void) {
+    this.satisfies('if', value => {
       const passed = predicate(value);
       if (!passed) return [];
       const child = new (<typeof Base>this.constructor)(this.path) as this;
@@ -69,17 +67,17 @@ export class Base {
     return this;
   }
 
-  satisfies(name: string, rule: Rule): this {
+  public satisfies(name: string, rule: Rule): this {
     this.tests.push({name, rule});
     return this;
   }
 
-  check(rule: Rule) {
+  public check(rule: Rule) {
     return rule && rule(this) || this;
   }
 
-  test(value: any): Failure[] {
-    const failures: Array<Failure> = [];
+  public test(value: any): IFailure[] {
+    const failures: IFailure[] = [];
     for (const test of this.tests) {
       const results = test.rule(value);
 
@@ -95,7 +93,7 @@ export class Base {
           failed: test.name,
           path: this.path,
           rule: test.rule,
-          value
+          value,
         });
       }
     }

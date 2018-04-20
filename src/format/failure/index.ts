@@ -1,1 +1,1 @@
-export * from "./FailureFormatter";
+export * from './FailureFormatter';

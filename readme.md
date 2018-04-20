@@ -248,6 +248,18 @@ validator(value).isString().required();
 validator(value).required().isString();
 ```
 
+### requiredWithNull
+
+A variation on the above will also allow a `null` value as well.
+
+```javascript
+validator(value).requiredWithNull();
+```
+
+```javascript
+validator(value).requiredWithNull().isString();
+```
+
 ### All Types
 
 ```javascript

@@ -1,87 +1,47 @@
 {
+  "defaultSeverity": "error",
+  "extends": [
+    "tslint:recommended"
+  ],
+  "jsRules": {},
   "rules": {
-    "class-name": true,
-    "comment-format": [
-      true,
-      "check-space"
-    ],
-    "indent": [
-      true,
-      "spaces"
-    ],
-    "no-duplicate-variable": true,
-    "no-eval": true,
-    "no-internal-module": true,
-    "no-trailing-whitespace": true,
-    "no-var-keyword": true,
-    "one-line": [
-      true,
-      "check-catch",
-      "check-finally",
-      "check-else",
-      "check-open-brace",
-      "check-whitespace"
-    ],
     "quotemark": [
       true,
       "single"
     ],
-    "typedef-whitespace": [
+    "curly": [
       true,
-      {
-        "call-signature": "nospace",
-        "index-signature": "nospace",
-        "parameter": "nospace",
-        "property-declaration": "nospace",
-        "variable-declaration": "nospace"
-      }
+      "ignore-same-line"
     ],
-    "variable-name": [
+    "no-empty": false,
+    "max-classes-per-file": false,
+    "no-unused-expression": [
       true,
-      "ban-keywords"
+      "allow-fast-null-checks",
+      "allow-new"
     ],
-    "whitespace": [
+    "arrow-parens": [
       true,
-      "check-branch",
-      "check-decl",
-      "check-operator",
-      "check-separator",
-      "check-type"
+      "ban-single-arg-parens"
     ],
-    "adjacent-overload-signatures": true,
-    "member-ordering": true,
-    "no-var-requires": true,
-    "curly": true,
-    "no-console": true,
-    "no-invalid-this": true,
-    "no-unreachable": true,
-    "no-unused-expression": true,
-    "no-unused-new": true,
-    "no-unused-variable": true,
-    "switch-default": true,
-    "triple-equals": true,
-    "use-isnan": true,
-    "eofline": true,
-    "linebreak-style": [
+    "no-var-requires": false,
+    "no-shadowed-variable": false,
+    "max-line-length": false,
+    "no-namespace": false,
+    "array-type": [
       true,
-      "LF"
+      "array"
     ],
-    "no-require-imports": true,
-    "object-literal-sort-keys": true,
-    "trailing-comma": [
-      true,
-      {
-        "multiline": "never",
-        "singleline": "never"
-      }
-    ],
-    "arrow-parens": true,
-    "jsdoc-format": true,
-    "new-parens": true,
-    "no-consecutive-blank-lines": true,
-    "object-literal-shorthand": true,
-    "one-variable-per-declaration": true,
-    "ordered-imports": true,
-    "semicolon": true
-  }
+    "whitespace": {
+      "options": [
+        "check-branch",
+        "check-decl",
+        "check-operator",
+        "check-separator",
+        "check-type"
+      ]
+    },
+    "no-angle-bracket-type-assertion": false
+  },
+  "rulesDirectory": []
 }

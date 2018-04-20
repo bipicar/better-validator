@@ -1,16 +1,14 @@
-/// <reference types="underscore" />
-
 import * as _ from 'underscore';
 
 const DEFAULT_OPTIONS = {
   staticTemplate: {
-    type: 'ValidationError'
+    type: 'ValidationError',
   },
-  wrapperElement: 'failures'
+  wrapperElement: 'failures',
 };
 
 export class WrapperFormatter {
-  options: any;
+  protected options: any;
 
   /**
    * Create wrapper formatter
@@ -27,9 +25,9 @@ export class WrapperFormatter {
    * @param {object[]} failures - array of failures
    * @return {string} formatted response
    */
-  format(failures) {
+  public format(failures) {
     return _.extend({}, this.options.staticTemplate, {
-      [this.options.wrapperElement]: failures
+      [this.options.wrapperElement]: failures,
     });
   }
 }
