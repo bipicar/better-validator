@@ -310,9 +310,10 @@ validator(value).isString();
 validator(value).isString().isEmail();
 ```
 
-### isInArray
+### isIncludedInArray
 
-Makes sure the value is of type string.
+Returns true if the value is present in the list.
+Very convenient to validate if a enum contains the given value
 
 ```javascript
 validator(value).isIncludedInArray(['define1','define2']);

@@ -198,6 +198,7 @@ describe('basic usage', () => {
     expect(validator(18, rule)).toEqual([]);
     expect(validator(19, rule)).toEqual([]);
     expect(validator(16, rule)).toContain(jasmine.objectContaining({ path: [], failed: 'isIncludedInArray' }));
+    expect(validator(undefined, rule)).toContain(jasmine.objectContaining({ path: [], failed: 'isIncludedInArray' }));
     expect(validator('17', rule)).toContain(jasmine.objectContaining({ path: [], failed: 'isIncludedInArray' }));
     expect(validator('asdf', rule)).toContain(jasmine.objectContaining({ path: [], failed: 'isIncludedInArray' }));
     expect(validator(new Date(), rule)).toContain(jasmine.objectContaining({ path: [], failed: 'isIncludedInArray' }));
