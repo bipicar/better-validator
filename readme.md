@@ -320,7 +320,7 @@ validator(value).isIncludedInArray(['define1','define2']);
 ```
 
 ```javascript
-validator(value).isString().isEmail().isIncludedInArray(['define1','define2']);
+validator(value).required().isEmail().isIncludedInArray(['define1','define2']);
 ```
 
 #### isString Checks
