@@ -184,4 +184,27 @@ describe('basic usage', () => {
     expect(validator(true, rule)).toEqual([]);
     expect(validator(false, rule)).toEqual([]);
   });
+
+
+  it('isIncludedInArray', () => {
+    const validator = new Validator(OPTIONS_RAW);
+
+    const values = [17, 18, 19];
+    const rule = (item) => {
+      item.isIncludedInArray(values);
+    };
+
+    expect(validator(17, rule)).toEqual([]);
+    expect(validator(18, rule)).toEqual([]);
+    expect(validator(19, rule)).toEqual([]);
+    expect(validator(16, rule)).toContain(jasmine.objectContaining({ path: [], failed: 'isIncludedInArray' }));
+    expect(validator(undefined, rule)).toContain(jasmine.objectContaining({ path: [], failed: 'isIncludedInArray' }));
+    expect(validator('17', rule)).toContain(jasmine.objectContaining({ path: [], failed: 'isIncludedInArray' }));
+    expect(validator('asdf', rule)).toContain(jasmine.objectContaining({ path: [], failed: 'isIncludedInArray' }));
+    expect(validator(new Date(), rule)).toContain(jasmine.objectContaining({ path: [], failed: 'isIncludedInArray' }));
+    expect(validator(/./, rule)).toContain(jasmine.objectContaining({ path: [], failed: 'isIncludedInArray' }));
+    expect(validator(true, rule)).toContain(jasmine.objectContaining({ path: [], failed: 'isIncludedInArray' }));
+    expect(validator(false, rule)).toContain(jasmine.objectContaining({ path: [], failed: 'isIncludedInArray' }));
+  });
+
 });

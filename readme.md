@@ -310,6 +310,19 @@ validator(value).isString();
 validator(value).isString().isEmail();
 ```
 
+### isIncludedInArray
+
+Returns true if the value is present in the list.
+Very convenient to validate if a enum contains the given value
+
+```javascript
+validator(value).isIncludedInArray(['define1','define2']);
+```
+
+```javascript
+validator(value).required().isEmail().isIncludedInArray(['define1','define2']);
+```
+
 #### isString Checks
 
 Checks from the library [validator](https://www.npmjs.com/package/validator) are included. Please see the link for more details.
