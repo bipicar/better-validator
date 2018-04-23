@@ -15,7 +15,7 @@ export class Base {
   }
 
   public path: (string | number)[];
-  protected tests: {name: string, rule: Rule}[];
+  protected tests: { name: string, rule: Rule }[];
 
   constructor(path: string | (string | number)[] | null) {
     this.path = !path ? [] : typeof path !== 'string' ? path : [path];
@@ -41,8 +41,8 @@ export class Base {
     return child;
   }
 
-  public isIncludedInArray(array:Array<any> = []): this {
-    this.satisfies('isIncludedInArray', (value) => _.contains(array, value));
+  public isIncludedInArray(array: any[] = []): this {
+    this.satisfies('isIncludedInArray', value => _.contains(array, value));
     return this;
   }
 
@@ -68,7 +68,7 @@ export class Base {
   }
 
   public satisfies(name: string, rule: Rule): this {
-    this.tests.push({name, rule});
+    this.tests.push({ name, rule });
     return this;
   }
 
