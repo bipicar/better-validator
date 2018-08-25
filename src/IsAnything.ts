@@ -1,6 +1,7 @@
 import * as _ from 'underscore';
 import {Base} from './Base';
 import {IsArrayOf} from './IsArrayOf';
+import {IsArrayOrObjectOf} from './IsArrayOrObjectOf';
 import {IsBoolean} from './IsBoolean';
 import {IsNumber} from './IsNumber';
 import {IsObject, ObjectValidator} from './IsObject';
@@ -43,6 +44,15 @@ export class IsAnything extends Base {
     };
     const child = new IsArrayOf(this.path, factory, 'isObject');
     this.satisfies('isObjectArray', value => (!Base.hasValue(value) || _.isArray(value)) && child.test(value));
+    return child;
+  }
+
+  public isArrayOrObject(childValidator: ObjectValidator) {
+    const factory = path => {
+      return new IsObject(path, childValidator, IsAnything, 'isAnything');
+    };
+    const child = new IsArrayOrObjectOf(this.path, factory, 'isObject');
+    this.satisfies('isArrayOrObjectOf', value => child.test(value));
     return child;
   }
 

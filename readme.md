@@ -447,6 +447,21 @@ validator(value).isObjectArray((item) => {
 }).lengthInRange(1); // one or more
 ```
 
+### isArrayOrObject
+
+Combination of isObjectArray and isObject.
+If the item is of type array, it validates all child items.
+If the item is of type Object it will validate the item as a child of the array
+
+```javascript
+const array = [{foo: ''}];
+const object = {foo: ''};
+
+validator(value).isArrayOrObject((item) => {
+  item('foo').isString();
+})
+```
+
 ## isArray
 
 ```javascript
