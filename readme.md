@@ -2,6 +2,8 @@
 
 _better-validator_ is my second generation object or request validator for node.js.
 
+**NEW** for my latest validator that is cleaner and tidier with even better type support and data sanitization, check out [validata](https://www.npmjs.com/package/validata) and [validata-koa](https://www.npmjs.com/package/validata-koa).
+
 The aim of this validator is to
 
 * be simple to use
