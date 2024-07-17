@@ -56,7 +56,7 @@ export class IsObject extends Base {
     const child = new this.elementValidator(path);
     this.satisfies(this.elementValidatorName, value => {
       const propertyValue = value && value[property];
-      return propertyValue === null || child.test(propertyValue);
+      return child.test(propertyValue);
     });
     return child;
   }

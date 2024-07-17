@@ -205,8 +205,8 @@ describe('readme.md', () => {
       it('will return 400 if not valid 1', (done) => {
         request(app)
           .post('/test')
-          .send({hint: 'test'})
-          .expect(400, [{path: ['count'], failed: 'required'}])
+          .send({hint: 'test', count: null})
+          .expect(400, [{path: ['count'], failed: 'required', value: null}])
           .end((err) => {
             if (err) fail(err);
             done();

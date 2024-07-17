@@ -34,7 +34,7 @@ describe('isObject', () => {
     const errors = validator.run();
 
     expect(errors).toBeDefined();
-    expect(errors.length).toBe(8);
+    expect(errors.length).toBe(10);
 
     expect(errors).toContain(jasmine.objectContaining({path: ['test2', 'foo'], failed: 'isString'}));
     expect(errors).toContain(jasmine.objectContaining({path: ['test2', 'bar'], failed: 'required'}));
