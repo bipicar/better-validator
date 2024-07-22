@@ -1,21 +1,6 @@
 # better-validator
 
-_better-validator_ is my second generation object or request validator for node.js.
-
-**NEW** for my latest validator that is cleaner and tidier with even better type support and data sanitization, check out [validata](https://www.npmjs.com/package/validata) and [validata-koa](https://www.npmjs.com/package/validata-koa).
-
-The aim of this validator is to
-
-* be simple to use
-* support a number of usage patterns including a *fluent interface*
-* support re-use of validator parts
-* support deep object and array validation
-* be able to customise the output structure
-* be able to customise failure messages
-* support i18n
-* use the well known [validator](https://www.npmjs.com/package/validator) library for string validation
-* be easily used with both express.js, koa.js and koa@next
-* written in and works with typescript (>= v2.0.0, see Section on Breaking Changes below)
+**Forked from https://gitlab.com/gregbacchus/better-validator**
 
 ## Basic usage
 
